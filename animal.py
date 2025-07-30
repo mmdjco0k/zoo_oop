@@ -4,10 +4,19 @@ import uuid
 
 class Animal(ABC):
     def __init__(self , name:str , weight:float , age:int):
+        self.validation(weight=weight , age=age)
         self.name = name 
         self._age = age
         self._weight = weight
         self._id = int(uuid.uuid4())
+
+    def validation(self , weight , age):
+        if weight <= 0 :
+            raise Exception("The weight must be positive")
+        
+        if age<0:
+            raise Exception("age cannot be negative")
+
 
     @property
     def id(self):
@@ -34,8 +43,9 @@ class Animal(ABC):
 
     @weight.setter
     def weight(self , new_weight):
-        if new_weight < 0:
-            raise Exception("Weight cannot be negative")
+        if new_weight <= 0:
+            raise Exception("The weight must be positive")
+        self._weight = new_weight
     
     def eat(self):
         return f"The {self.name} is eating"
@@ -43,10 +53,9 @@ class Animal(ABC):
     def sleep(self):
         return f"The {self.name} is sleeping"
     
+
     def info(self):
         print(f"name is {self.name}")
         print(f"age is {self._age}")
         print(f"weight is {self._weight}")
 
-
-    
