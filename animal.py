@@ -18,6 +18,10 @@ class InvalidAnimalDataException:
                 self.exeption_message = "The weight must be positive"
             case 6:
                 self.exeption_message ="tail size cannot be negative"
+            case 7 :
+                self.exeption_message="the animal type is wrong"
+            case 8:
+                self.exeption_message = "you cannot change animal type"
             case _:
                 print(f"error id is unknown")
 
@@ -25,12 +29,16 @@ class InvalidAnimalDataException:
         raise Exception(self.exeption_message)
 
 class Animal(ABC):
-    def __init__(self , name:str , weight:float , age:int):
+    counter = 0
+    def __init__(self , name:str , weight:float , age:int ):
         self.validation(weight=weight , age=age)
         self.name = name 
         self._age = age
         self._weight = weight
-        self._id = int(uuid.uuid4())
+        self._id = Animal.counter
+        self._animal_type = None
+        Animal.counter += 1
+        
 
     def validation(self , weight , age):
         if weight <= 0 :
@@ -54,8 +62,17 @@ class Animal(ABC):
     def age(self):
         return self._age
     
+    @property
+    def animal_type(self):
+        return self._animal_type
+
+    @animal_type.setter
+    def animal_type(self , value):
+        error = InvalidAnimalDataException(8)
+        error.run_exeption()
+
     @id.setter
-    def id(self, value):
+    def id(self , value):
             error = InvalidAnimalDataException(3)
             error.run_exeption()    
     @age.setter
@@ -90,6 +107,7 @@ class Animal(ABC):
 class lion(Animal):
     def __init__(self , name:str , weight:float , age:int , taile_size:float ):
         super().__init__(name, weight, age)
+        self._animal_type = 'lion'
         self._taile_size = taile_size
     
     @property
@@ -111,8 +129,9 @@ class lion(Animal):
         print(f"The size of the {self.name} tail is {self._taile_size} cm")
 
 class rat(Animal):
-    def __init__(self , name:str , weight:float , age:int , color:str ):
+    def __init__(self , name:str , weight:float , age:int , color:str  ):
         super().__init__(name, weight, age)
+        self._animal_type = 'rat'
         self._color = color
     
     @property
@@ -129,6 +148,7 @@ class rat(Animal):
 class snake(Animal):
     def __init__(self , name:str , weight:float , age:int ,venomous: bool ):
         super().__init__(name, weight, age)
+        self._animal_type = 'snake'
         self._venomous = venomous
     
     @property
