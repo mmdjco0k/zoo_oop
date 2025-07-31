@@ -7,21 +7,23 @@ class InvalidAnimalDataException:
         self.exeption_id = exeption_id
         match exeption_id:
             case 1:
-                self.exeption_message = "The weight must be positive"
+                self.exeption_message = "The weight must be positive!"
             case 2:
-                self.exeption_message = "age cannot be negative"
+                self.exeption_message = "age cannot be negative!"
             case 3:
-                self.exeption_message = "you can not change id"
+                self.exeption_message = "you can not change id!"
             case 4:
-                self.exeption_message = "there is a problem"
+                self.exeption_message = "there is a problem!"
             case 5: 
-                self.exeption_message = "The weight must be positive"
+                self.exeption_message = "The weight must be positive!"
             case 6:
-                self.exeption_message ="tail size cannot be negative"
+                self.exeption_message = "tail size cannot be negative!"
             case 7 :
-                self.exeption_message="the animal type is wrong"
+                self.exeption_message = "the animal type is wrong!"
             case 8:
-                self.exeption_message = "you cannot change animal type"
+                self.exeption_message = "you cannot change animal type!"
+            case 9:
+                self.exeption_message = "the animal name is taken!"
             case _:
                 print(f"error id is unknown")
 
