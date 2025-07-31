@@ -1,34 +1,5 @@
 from abc import ABC , abstractmethod
-import uuid
-
-
-class InvalidAnimalDataException:
-    def __init__(self , exeption_id):
-        self.exeption_id = exeption_id
-        match exeption_id:
-            case 1:
-                self.exeption_message = "The weight must be positive!"
-            case 2:
-                self.exeption_message = "age cannot be negative!"
-            case 3:
-                self.exeption_message = "you can not change id!"
-            case 4:
-                self.exeption_message = "there is a problem!"
-            case 5: 
-                self.exeption_message = "The weight must be positive!"
-            case 6:
-                self.exeption_message = "tail size cannot be negative!"
-            case 7 :
-                self.exeption_message = "the animal type is wrong!"
-            case 8:
-                self.exeption_message = "you cannot change animal type!"
-            case 9:
-                self.exeption_message = "the animal name is taken!"
-            case _:
-                print(f"error id is unknown")
-
-    def run_exeption(self):
-        raise Exception(self.exeption_message)
+import ExceptionHandeling as eh
 
 class Animal(ABC):
     counter = 0
@@ -44,12 +15,11 @@ class Animal(ABC):
 
     def validation(self , weight , age):
         if weight <= 0 :
-            error = InvalidAnimalDataException(1)
-            error.run_exeption()
+            eh.raise_error(1)
         
         if age<0:
-            error = InvalidAnimalDataException(2)
-            error.run_exeption()
+            eh.raise_error(2)
+
 
     @property
     def id(self):
@@ -70,25 +40,23 @@ class Animal(ABC):
 
     @animal_type.setter
     def animal_type(self , value):
-        error = InvalidAnimalDataException(8)
-        error.run_exeption()
+            eh.raise_error(8)
+
 
     @id.setter
     def id(self , value):
-            error = InvalidAnimalDataException(3)
-            error.run_exeption()    
+            eh.raise_error(3)
+ 
     @age.setter
     def age(self , new_age ):
         if new_age < self._age or new_age < 0:
-            error = InvalidAnimalDataException(4)
-            error.run_exeption()
+            eh.raise_error(4)
         self._age = new_age
 
     @weight.setter
     def weight(self , new_weight):
         if new_weight <= 0:
-            error = InvalidAnimalDataException(5)
-            error.run_exeption()
+            eh.raise_error(1)
         self._weight = new_weight
     
     def eat(self):
@@ -119,8 +87,7 @@ class lion(Animal):
     @taile_size.setter
     def taile_size(self , new_size):
         if new_size < 0 :
-            error = InvalidAnimalDataException(6)
-            error.run_exeption()
+            eh.raise_error(6)
         self._taile_size = new_size
     
     def make_sound(self):
