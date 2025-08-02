@@ -123,7 +123,7 @@ class lion(Animal):
         
     @herd_leader.setter
     def herd_leader(self , new_value):
-            if type(herd_leader) != bool:
+            if not isinstance(new_value , bool):
                 eh.raise_error(11)
             self.herd_leader == new_value
     
@@ -135,14 +135,51 @@ class lion(Animal):
         print(f"The size of the {self.name} tail is {self._taile_size} cm")
 
 class rat(Animal):
-    def __init__(self , name:str , weight:float , age:int , color:str  ):
+    def __init__(self , name:str , weight:float , age:int , color:str , climbing_ability:bool , digging_ability:bool):
+        self.validation(weight=weight , age=age , climbing_ability=climbing_ability , digging_ability=digging_ability)
         super().__init__(name, weight, age)
         self._animal_type = 'rat'
         self._color = color
+        self._climbing_ability = climbing_ability
+        self._digging_ability = digging_ability
+
+    def validation(self , weight , age , climbing_ability , digging_ability):
+        super().validation(weight=weight , age=age)
+        
+        if not None and not isinstance(climbing_ability , bool):
+            eh.raise_error(11)
+        if not None and not isinstance(digging_ability , bool):
+            eh.raise_error(11)
+
+    @property
+    def climbing_ability(self):
+        if self._climbing_ability == True:
+            print(f"The {self.name} can climb")
+        else :
+            print(f"The {self.name} can not climb")
     
+    @climbing_ability.setter
+    def climbing_ability(self , new_value):
+        if not None and not isinstance(new_value , bool):
+            eh.raise_error(11)
+        self._climbing_ability = new_value
+
+    @property
+    def digging_ability(self):
+        if self._digging_ability == True:
+            print(f"The {self.name} can digging")
+        else :
+            print(f"The {self.name} can not digging")
+    
+    @digging_ability.setter
+    def digging_ability(self , new_value ) :
+        if not None and not isinstance(new_value , bool):
+            eh.raise_error(11)
+        self._digging_ability = new_value
+
     @property
     def color(self):
-        return f"The color of {self.name} is {self._color} "
+        return f"The color of {self.name} is {self._color}"
     
     def make_sound(self):
         return "hisses"

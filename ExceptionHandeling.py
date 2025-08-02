@@ -35,7 +35,7 @@ def raise_error(exeption_id):
             case 10 :
                 raise InvalidInput(message="\nStrength should be between 1 and 10!")
             case 11:
-                    raise InvalidInput(message="\nherd_leader should be boolean (True or False)!")
+                    raise InvalidInput(message="\nThis value should be boolean (True or False)!")
             case 12:
                     raise InvalidInput(message = "\nThe tail size must be positive!")
 

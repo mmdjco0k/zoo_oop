@@ -31,7 +31,7 @@ class Zoo:
                 
             case "rat":
                 try:
-                    r = animal.rat(name=name , weight=weight , age=age , color=special)
+                    r = animal.rat(name=name , weight=weight , age=age , color=special1 , climbing_ability=special2 , digging_ability=special3)
                     self.animals_list.append(r)
                     return True
                 except eh.InvalidInput as e:
@@ -77,10 +77,17 @@ class Zoo:
 
 
     
-my_zoo = Zoo()
-my_zoo.create( animal_type='lion' , name="aa",weight=32 , age=1 , special1=1 , special2=False , special3=1)
-
+# my_zoo = Zoo()
+# my_zoo.create( animal_type='lion' , name="aa",weight=32 , age=1 , special1=1 , special2=False , special3=1)
+# my_zoo.create(animal_type="rat" , name="aa" , weight=32 , age=1 , special1="green" , special2=False , special3=True)
+# my_zoo.ShowList()
 # l = my_zoo.animals_list[0]
-# print(l.herd_leader)
+# print(l)
+# print(l.climbing_ability )
+# l.climbing_ability=True
+# print(l.climbing_ability )
+# print(l.digging_ability)
+# l.digging_ability = False
+# print(l.digging_ability)
 # p = my_zoo.GetIdByName("aa")
 
