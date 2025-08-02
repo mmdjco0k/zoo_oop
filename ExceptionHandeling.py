@@ -8,6 +8,7 @@ class InvalidInput(errors):
 class IdException(errors):
     def __init__(self , message = "you cannot change id"):
         super().__init__(message)
+
 class PrivateVarException(errors):
     def __init__(self , message = "there is problem"):
         super().__init__(message)
@@ -31,6 +32,13 @@ def raise_error(exeption_id):
                 raise PrivateVarException(message = "\nyou cannot change animal type!")
             case 9:
                 raise InvalidInput(message = "\nthe animal name is taken!")
+            case 10 :
+                raise InvalidInput(message="\nStrength should be between 1 and 10!")
+            case 11:
+                    raise InvalidInput(message="\nherd_leader should be boolean (True or False)!")
+            case 12:
+                    raise InvalidInput(message = "\nThe tail size must be positive!")
+
 
 
 

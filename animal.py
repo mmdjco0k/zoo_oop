@@ -4,7 +4,7 @@ import ExceptionHandeling as eh
 class Animal(ABC):
     counter = 0
     def __init__(self , name:str , weight:float , age:int ):
-        self.validation(weight=weight , age=age)
+        # self.validationـ(weight=weight , age=age)
         self.name = name 
         self._age = age
         self._weight = weight
@@ -75,11 +75,26 @@ class Animal(ABC):
         pass
 
 class lion(Animal):
-    def __init__(self , name:str , weight:float , age:int , taile_size:float ):
+    def __init__(self , name:str , weight:float , age:int , taile_size:float , herd_leader:bool  , strength:int  ):
+        self.validation(weight=weight , age=age , taile_size=taile_size , herd_leader=herd_leader , strength=strength)
         super().__init__(name, weight, age)
         self._animal_type = 'lion'
         self._taile_size = taile_size
-    
+        self._herd_leader = herd_leader
+        self._strength = strength
+
+    def validation(self, weight, age, taile_size , herd_leader , strength):
+        super().validation(weight=weight , age=age)
+
+        if taile_size < 0 :
+            eh.raise_error(6)
+        
+        if  not isinstance(herd_leader, bool):
+            eh.raise_error(11)
+        
+        if not 1 <= strength <= 10:
+            eh.raise_error(10)
+        
     @property
     def taile_size(self):
         return f"The size of the {self.name} tail is {self._taile_size} cm"
@@ -89,6 +104,28 @@ class lion(Animal):
         if new_size < 0 :
             eh.raise_error(6)
         self._taile_size = new_size
+    @property
+    def strength(self):
+            return f"The strength of the {self.name} is {self._strength}"
+        
+    @strength.setter
+    def strength(self , new_strength):
+            if not 1 <= new_strength <= 10:
+                eh.raise_error(10)
+            self.strength = new_strength
+        
+    @property
+    def herd_leader(self):
+            if self._herd_leader == True:
+                print(f"The {self.name} is the herd leader")
+            else :
+                print(f"The {self.name} is not the herd leader")
+        
+    @herd_leader.setter
+    def herd_leader(self , new_value):
+            if type(herd_leader) != bool:
+                eh.raise_error(11)
+            self.herd_leader == new_value
     
     def make_sound(self):
         return "Roar"

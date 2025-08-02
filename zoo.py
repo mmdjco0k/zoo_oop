@@ -17,13 +17,13 @@ class Zoo:
                 Id = AnimalObject.id
                 return Id
 
-    def create(self , animal_type , name , weight , age , special):
+    def create(self , animal_type , name , weight , age , special1 , special2 , special3):
     #ورودی special برای ویژگی منحصر به فرد هر حیوان است
         self.validation(name)
         match animal_type:
             case "lion":
                 try:
-                    l = animal.lion(name=name , weight=weight , age=age , taile_size=special)
+                    l = animal.lion(name=name , weight=weight , age=age , taile_size=special1 , herd_leader=special2 , strength=special3)
                     self.animals_list.append(l)
                     return True
                 except eh.InvalidInput as e:
@@ -77,18 +77,10 @@ class Zoo:
 
 
     
-# my_zoo = Zoo()
-# my_zoo.create( animal_type='rat' , name="abas",weight=32 , age=1 , special=1)
+my_zoo = Zoo()
+my_zoo.create( animal_type='lion' , name="aa",weight=32 , age=1 , special1=1 , special2=False , special3=1)
 
-# my_zoo.ShowList()
+# l = my_zoo.animals_list[0]
+# print(l.herd_leader)
+# p = my_zoo.GetIdByName("aa")
 
-# my_zoo.create( animal_type='lion' , name="awds",weight=-32 , age=1 , special=1)
-
-# my_zoo.ShowList()
-
-# for i in my_zoo.animals_list:
-#     print(i.name)
-#     print(i.id)
-#     print(i.animal_type)
-#     i.animal_type = "x"
-#     print(i.animal_type)
