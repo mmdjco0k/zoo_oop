@@ -71,7 +71,8 @@ class Animal(ABC):
     
     
     def info(self):
-        print(f"name is {self.name}")
+        print(f"\nname is {self.name}")
+        print(f"id is {self._id}")
         print(f"age is {self._age}")
         print(f"weight is {self._weight}")
     
