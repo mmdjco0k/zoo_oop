@@ -13,13 +13,17 @@ class Animal(ABC):
         Animal.counter += 1
         
 
-    def validation(self , weight , age):
-        if weight <= 0 :
+    def validation(self , name , weight , age):
+        if not None and not isinstance(weight ,float) :
+            eh.raise_error(15)
+        elif weight <= 0:
             eh.raise_error(1)
-        
-        if age<0:
+        if not None and not isinstance(age , int) :
+            eh.raise_error(16)
+        elif age<0:
             eh.raise_error(2)
-
+        if not None and not isinstance(name , str):
+            eh.raise_error(17)
 
     @property
     def id(self):
@@ -76,24 +80,28 @@ class Animal(ABC):
 
 class lion(Animal):
     def __init__(self , name:str , weight:float , age:int , taile_size:float , herd_leader:bool  , strength:int  ):
-        self.validation(weight=weight , age=age , taile_size=taile_size , herd_leader=herd_leader , strength=strength)
+        self.validation(name=name , weight=weight , age=age , taile_size=taile_size , herd_leader=herd_leader , strength=strength)
         super().__init__(name, weight, age)
         self._animal_type = 'lion'
         self._taile_size = taile_size
         self._herd_leader = herd_leader
         self._strength = strength
 
-    def validation(self, weight, age, taile_size , herd_leader , strength):
-        super().validation(weight=weight , age=age)
-
+    def validation(self, name , weight, age, taile_size , herd_leader , strength):
+        super().validation(name=name , weight=weight , age=age)
+ 
         if taile_size < 0 :
             eh.raise_error(6)
+        elif not None and not isinstance(taile_size , float):
+            eh.raise_error(15)
         
-        if  not isinstance(herd_leader, bool):
+        if  not None and not isinstance(herd_leader, bool):
             eh.raise_error(11)
         
         if not 1 <= strength <= 10:
             eh.raise_error(10)
+        elif not None and not isinstance(strength , int):
+            eh.raise_error(16)
         
     @property
     def taile_size(self):
@@ -136,17 +144,20 @@ class lion(Animal):
         print(f"The strength of the {self.name} is {self._strength}")
         print(f"The {self.name} {'is the' if self._herd_leader else 'is not the'} herd leader")
 
+
+
+
 class rat(Animal):
     def __init__(self , name:str , weight:float , age:int , color:str , climbing_ability:bool , digging_ability:bool):
-        self.validation(weight=weight , age=age , climbing_ability=climbing_ability , digging_ability=digging_ability)
+        self.validation(name=name , weight=weight , age=age , climbing_ability=climbing_ability , digging_ability=digging_ability)
         super().__init__(name, weight, age)
         self._animal_type = 'rat'
         self._color = color
         self._climbing_ability = climbing_ability
         self._digging_ability = digging_ability
 
-    def validation(self , weight , age , climbing_ability , digging_ability):
-        super().validation(weight=weight , age=age)
+    def validation(self , name , weight , age , climbing_ability , digging_ability):
+        super().validation(name=name , weight=weight , age=age)
         
         if not None and not isinstance(climbing_ability , bool):
             eh.raise_error(11)
@@ -192,17 +203,20 @@ class rat(Animal):
         print(f"The {self.name} {'can' if self._climbing_ability else 'can not'} climb")
         print(f"The {self.name} {'can' if self._digging_ability else 'can not'} digging")
 
+
+
+
 class snake(Animal):
     def __init__(self , name:str , weight:float , age:int ,venomous: bool , tamed : bool , length:float ):
-        self.validation(weight=weight , age=age , venomous=venomous , tamed=tamed , length=length)
+        self.validation(name=name , weight=weight , age=age , venomous=venomous , tamed=tamed , length=length)
         super().__init__(name, weight, age)
         self._animal_type = 'snake'
         self._venomous = venomous
         self._tamed = tamed
         self._length = length
 
-    def validation(self , weight , age , venomous , tamed , length):
-        super().validation(weight=weight , age=age)
+    def validation(self ,name ,weight , age , venomous , tamed , length):
+        super().validation(name=name , weight=weight , age=age)
         if not None and not isinstance(venomous , bool):
             eh.raise_error(11)
         if not None and not isinstance(tamed , bool):

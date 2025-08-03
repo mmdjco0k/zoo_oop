@@ -77,9 +77,9 @@ class Zoo:
 
 
     
-# my_zoo = Zoo()
-# my_zoo.create(animal_type="lion" , name="aa" , weight=32 , age=1 , special1=11 , special2=True , special3=10)
-# my_zoo.ShowList()
-# l = my_zoo.animals_list[0]
-# print(l) 
+my_zoo = Zoo()
+my_zoo.create(animal_type="lion" , name="aa" , weight=32.0 , age=21 , special1=11.1 , special2=True , special3=10)
+my_zoo.ShowList()
+l = my_zoo.animals_list[0]
+print(l) 
 
