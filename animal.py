@@ -133,6 +133,8 @@ class lion(Animal):
     def info(self):
         super().info()
         print(f"The size of the {self.name} tail is {self._taile_size} cm")
+        print(f"The strength of the {self.name} is {self._strength}")
+        print(f"The {self.name} {'is the' if self._herd_leader else 'is not the'} herd leader")
 
 class rat(Animal):
     def __init__(self , name:str , weight:float , age:int , color:str , climbing_ability:bool , digging_ability:bool):
@@ -187,13 +189,27 @@ class rat(Animal):
     def info(self):
         super().info()
         print(f"The color of {self.name} is {self._color} ")
+        print(f"The {self.name} {'can' if self._climbing_ability else 'can not'} climb")
+        print(f"The {self.name} {'can' if self._digging_ability else 'can not'} digging")
 
 class snake(Animal):
-    def __init__(self , name:str , weight:float , age:int ,venomous: bool ):
+    def __init__(self , name:str , weight:float , age:int ,venomous: bool , tamed : bool , length:float ):
+        self.validation(weight=weight , age=age , venomous=venomous , tamed=tamed , length=length)
         super().__init__(name, weight, age)
         self._animal_type = 'snake'
         self._venomous = venomous
-    
+        self._tamed = tamed
+        self._length = length
+
+    def validation(self , weight , age , venomous , tamed , length):
+        super().validation(weight=weight , age=age)
+        if not None and not isinstance(venomous , bool):
+            eh.raise_error(11)
+        if not None and not isinstance(tamed , bool):
+            eh.raise_error(11)
+        if length is None or not isinstance(length, float) and not 1 <= length <= 10:
+            eh.raise_error(14)
+
     @property
     def venomous(self):
         if self._venomous == True:
@@ -201,10 +217,40 @@ class snake(Animal):
         else:
             return f"{self.name} is not venomous"
     
+    @venomous.setter
+    def venomous(self , new_value):
+        if not None and not isinstance(new_value , bool):
+            eh.raise_error(11)
+        self._venomous = new_value
+
+    @property
+    def tamed(self):
+        if self._tamed == True:
+            return f"{self.name} is tamed"
+        else:
+            return f"{self.name} is not tamed"
+    
+    @tamed.setter
+    def tamed(self , new_value):
+        if not None and not isinstance(new_value , bool):
+            eh.raise_error(11)
+        self._tamed = new_value
+    
+    @property
+    def length(self):
+        print(f'{self.name} length is {self._length}')
+    
+    @length.setter
+    def length(self , new_value):
+        if new_value is None or not isinstance(new_value, float) and not 1 <= new_value <= 10:
+            eh.raise_error(14)
+        self._length = new_value
+
     def make_sound(self):
         return "sisss"
     
     def info(self):
         super().info()
         print(f"{self.name} is {'venomous' if self._venomous else 'not venomous'}")
-
+        print(f"{self.name} is {'tamed' if self._tamed else 'not tamed'}")
+        print(f'{self.name} length is {self._length}')

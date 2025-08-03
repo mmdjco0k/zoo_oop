@@ -39,7 +39,7 @@ class Zoo:
 
             case "snake":
                 try:
-                    s = animal.snake(name=name , weight=weight , age=age , venomous=special)
+                    s = animal.snake(name=name , weight=weight , age=age , venomous=special1 , tamed=special2 , length=special3)
                     self.animals_list.append(s)
                     return True
                 except eh.InvalidInput as e:
@@ -78,16 +78,8 @@ class Zoo:
 
     
 # my_zoo = Zoo()
-# my_zoo.create( animal_type='lion' , name="aa",weight=32 , age=1 , special1=1 , special2=False , special3=1)
-# my_zoo.create(animal_type="rat" , name="aa" , weight=32 , age=1 , special1="green" , special2=False , special3=True)
+# my_zoo.create(animal_type="lion" , name="aa" , weight=32 , age=1 , special1=11 , special2=True , special3=10)
 # my_zoo.ShowList()
 # l = my_zoo.animals_list[0]
-# print(l)
-# print(l.climbing_ability )
-# l.climbing_ability=True
-# print(l.climbing_ability )
-# print(l.digging_ability)
-# l.digging_ability = False
-# print(l.digging_ability)
-# p = my_zoo.GetIdByName("aa")
+# print(l) 
 

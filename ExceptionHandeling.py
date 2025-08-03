@@ -38,6 +38,8 @@ def raise_error(exeption_id):
                     raise InvalidInput(message="\nThis value should be boolean (True or False)!")
             case 12:
                     raise InvalidInput(message = "\nThe tail size must be positive!")
+            case 14 :
+                    raise InvalidInput(message="\nSnake size should be between 1 and 10!")
 
 
 
