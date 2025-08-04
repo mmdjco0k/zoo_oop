@@ -18,11 +18,12 @@ def print_menu(status):
             print('\n1 : add animal')
             print('2 : delete animal')
             print('3 : show all animal')
-            print('4 : search by the name or id')
-            print('5 : counting the number of animals of each species')
-            print('6 : get log')
-            print('7 : save and recover data')
-            print('8 : login')
+            print('4 : search by the name')
+            print('5 : search by the id')
+            print('6 : counting the number of animals of each species')
+            print('7 : get log')
+            print('8 : save and recover data')
+            print('9 : login')
             operation = int(input("\nenter a number : "))
             return operation
 
@@ -85,18 +86,27 @@ def operations(role):
                 except p.PermissionError as e:
                         print(e.args[0])
             case 2:
-                pass
+                try:
+                    if permission(role=role):
+                        animal_name = input("\nEnter animal name:")
+                        zoo.destroy(name=animal_name)
+                except p.PermissionError as e:
+                        print(e.args[0])
             case 3:
                 zoo.ShowList()
             case 4:
-                pass
+                name = input('Enter the name of animal:')
+                zoo.search_by_name(name=name)
             case 5:
-                pass
+                id = input('Enter the id of animal:')
+                zoo.search_by_id(id=id)
             case 6:
-                pass
+                zoo.counter()
             case 7:
                 pass
             case 8:
+                pass
+            case 9:
                 try:
                     if logged_in(role):
                         login()

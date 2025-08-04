@@ -36,10 +36,10 @@ class Zoo:
             print("\n",e.args[0])
             return False            
 
-    def destroy(self , id):
+    def destroy(self , name):
         for AnimalObject in self.animals_list :
 
-            if AnimalObject.id == id :
+            if AnimalObject.name == name :
                 AnimalObject.info()
                 i = input("\nare you sure you want to destroy this animal ( y / n ) :")
                 if i == 'y':
@@ -48,11 +48,12 @@ class Zoo:
                     print('the animal succsesfully destroyed')
                     return True
                 elif i == 'n':
+                    print('ok')
                     return False                    
                 else:
                     print('\ninvalid input!')
                     return False
-        print("\ninvalid id!")
+        print("\ninvalid input!")
         return False
     
     def ShowList(self):
@@ -65,7 +66,7 @@ class Zoo:
 
     def search_by_id(self , id):
         for AnimalObject in self.animals_list:
-            if AnimalObject.id == id:
+            if AnimalObject.id == int(id):
                 AnimalObject.info()
                 return AnimalObject
         print('\ninvalid input!')
