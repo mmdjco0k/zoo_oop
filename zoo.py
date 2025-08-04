@@ -66,9 +66,12 @@ class Zoo:
         return False
     
     def ShowList(self):
-        for AnimalObject in self.animals_list:
-            print("\n")
-            AnimalObject.info()
+        if len(self.animals_list) != 0:
+            for AnimalObject in self.animals_list:
+                print("\n")
+                AnimalObject.info()
+        else :
+            print("\nThere is no animal in the zoo")
 
     def search_by_id(self , id):
         for AnimalObject in self.animals_list:

@@ -222,8 +222,8 @@ class snake(Animal):
             eh.raise_error(11)
         if not None and not isinstance(tamed , bool):
             eh.raise_error(11)
-        if length is None or not isinstance(length, float) and not 1 <= length <= 10:
-            eh.raise_error(14)
+        if length is None or not isinstance(length, float):
+            eh.raise_error(15)
 
     @property
     def venomous(self):
@@ -257,8 +257,8 @@ class snake(Animal):
     
     @length.setter
     def length(self , new_value):
-        if new_value is None or not isinstance(new_value, float) and not 1 <= new_value <= 10:
-            eh.raise_error(14)
+        if new_value is None or not isinstance(new_value, float):
+            eh.raise_error(15)
         self._length = new_value
 
     def make_sound(self):

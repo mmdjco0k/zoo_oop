@@ -1,6 +1,10 @@
 import permission as p
+from zoo import Zoo
+import ExceptionHandeling as eh
 admin_username = "admin"
 admin_password = "admin123"
+
+zoo = Zoo()
 
 def print_menu(status):    
     match status:
@@ -22,17 +26,68 @@ def print_menu(status):
             operation = int(input("\nenter a number : "))
             return operation
 
+def add_animal(animal_type , role):
+    match animal_type:
+        case "lion":
+            try:
+                name = input("Enter lion name:")
+                weight = input("Enter lion weight(number):")
+                age = input("Enter lion age(number):")
+                taile_size = input("Enter lion tail size(number):")
+                herd_leader = input('Enter status herd leader of lion (True or False):')
+                strength = input("Enter strength of lion (1 to 10):")
+                if zoo.create(animal_type="lion" , name=name , weight=float(weight) , age=int(age) , special1=float(taile_size) , special2=bool(herd_leader) , special3=int(strength)):
+                    print("\nThe lion info:")
+                    l = zoo.search_by_name(name=name)
+            except Exception :
+                print("\nYou gave the wrong input!")
+
+        case "rat":
+            try:
+                name = input("Enter rat name:")
+                weight = input("Enter rat weight(number):")
+                age = input("Enter rat age(number):")
+                color = input("Enter rat color:")
+                climbing_ability = input("Cat this rat climnb? (True or False):")
+                digging_ability = input("Can this rat dig? (True of False):")
+                if zoo.create(animal_type="rat" , name=name , weight=float(weight) , age=int(age) , special1=color , special2=bool(climbing_ability) , special3=bool(digging_ability)):
+                    print('\n The rat info:')
+                    l = zoo.search_by_name(name=name)
+            except Exception :
+                print("\nYou gave the wrong input!")
+        case "snake":
+            try:
+                name = input("Enter snake name:")
+                weight = input("Enter snake weight(number):")
+                age = input("Enter snake age(number):")
+                venomous = input("Is that snake venomous?(True or False):")
+                tamed = input("Is the snake tamed?(True or False):")
+                length = input("Enter the length of this snake:")
+                if zoo.create(animal_type="snake" , name=name , weight=float(weight) , age=int(age) , special1=bool(venomous) , special2=bool(tamed)  , special3=float(length)):
+                    print("The snake info:")
+                    zoo.search_by_name(name)
+            except Exception :
+                    print("\nYou gave the wrong input!")
+
+        case _:
+            print('\nInvalid input!')
+    operations(role=role)
 
 def operations(role):
     while True:
         operation = print_menu('operations')
         match operation:
             case 1:
-                pass
+                try:
+                    if permission(role=role):
+                        animal_type = input("\nEnter animal type (lion , rat , snake):")
+                        add_animal(animal_type=animal_type , role=role)
+                except p.PermissionError as e:
+                        print(e.args[0])
             case 2:
                 pass
             case 3:
-                pass
+                zoo.ShowList()
             case 4:
                 pass
             case 5:
@@ -52,7 +107,6 @@ def operations(role):
 
 
 def login():
-    role = 'user'
     while True:
         user_input = print_menu('start')
         match user_input:
