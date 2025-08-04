@@ -80,13 +80,14 @@ class Animal(ABC):
         pass
 
 class lion(Animal):
-    def __init__(self , name:str , weight:float , age:int , taile_size:float , herd_leader:bool  , strength:int  ):
+    def __init__(self , animal_type:str , name:str , weight:float , age:int , taile_size:float , herd_leader:bool  , strength:int  ):
         self.validation(name=name , weight=weight , age=age , taile_size=taile_size , herd_leader=herd_leader , strength=strength)
         super().__init__(name, weight, age)
-        self._animal_type = 'lion'
+        self._animal_type = animal_type
         self._taile_size = taile_size
         self._herd_leader = herd_leader
         self._strength = strength
+    
 
     def validation(self, name , weight, age, taile_size , herd_leader , strength):
         super().validation(name=name , weight=weight , age=age)
@@ -149,7 +150,7 @@ class lion(Animal):
 
 
 class rat(Animal):
-    def __init__(self , name:str , weight:float , age:int , color:str , climbing_ability:bool , digging_ability:bool):
+    def __init__(self , animal_type:str , name:str , weight:float , age:int , color:str , climbing_ability:bool , digging_ability:bool):
         self.validation(name=name , weight=weight , age=age , climbing_ability=climbing_ability , digging_ability=digging_ability)
         super().__init__(name, weight, age)
         self._animal_type = 'rat'
@@ -208,7 +209,7 @@ class rat(Animal):
 
 
 class snake(Animal):
-    def __init__(self , name:str , weight:float , age:int ,venomous: bool , tamed : bool , length:float ):
+    def __init__(self , animal_type:str , name:str , weight:float , age:int ,venomous: bool , tamed : bool , length:float ):
         self.validation(name=name , weight=weight , age=age , venomous=venomous , tamed=tamed , length=length)
         super().__init__(name, weight, age)
         self._animal_type = 'snake'

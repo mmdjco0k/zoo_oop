@@ -1,5 +1,20 @@
 import animal
 import ExceptionHandeling as eh
+
+
+def create_animal(animal_type , name , weight , age , **kwargs):
+    match animal_type:
+        case "lion":
+            return animal.lion(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
+            
+        case "rat":
+            return animal.rat(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
+        case "snake":
+            return animal.snake(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
+        case _:
+            eh.raise_error(7)
+
+
 class Zoo:
     def __init__(self):
         # self.create(self , animal_type , name , weight , age  , special)
@@ -10,41 +25,16 @@ class Zoo:
             if i.name == name :
                 eh.raise_error(9)
 
-    def create(self , animal_type , name , weight , age , special1 , special2 , special3):
-    #ورودی special برای ویژگی منحصر به فرد هر حیوان است
+    def create(self , animal_type , name , weight , age , **kwargs):
         try:
             self.validation(name)
-            match animal_type:
-                case "lion":
-                    try:
-                        l = animal.lion(name=name , weight=weight , age=age , taile_size=special1 , herd_leader=special2 , strength=special3)
-                        self.animals_list.append(l)
-                        return True
-                    except eh.InvalidInput as e:
-                        print(e.args[0])
-                    
-                case "rat":
-                    try:
-                        r = animal.rat(name=name , weight=weight , age=age , color=special1 , climbing_ability=special2 , digging_ability=special3)
-                        self.animals_list.append(r)
-                        return True
-                    except eh.InvalidInput as e:
-                            print(e.args[0])
-
-                case "snake":
-                    try:
-                        s = animal.snake(name=name , weight=weight , age=age , venomous=special1 , tamed=special2 , length=special3)
-                        self.animals_list.append(s)
-                        return True
-                    except eh.InvalidInput as e:
-                        print(e.args[0])
-
-                case _:
-                    error = animal.InvalidAnimalDataException(7)
-                    error.run_exeption()
-                    return False
+            animal = create_animal(animal_type , name , weight , age , **kwargs)
+            print(animal)
+            self.animals_list.append(animal)
+            return True
         except eh.InvalidInput as e:
-                        print("\n",e.args[0])
+            print("\n",e.args[0])
+            return False            
 
     def destroy(self , id):
         for AnimalObject in self.animals_list :
@@ -103,19 +93,3 @@ class Zoo:
         print(f"We have {lion_counter} of lions")
         print(f"We have {rat_counter} of rats")
         print(f"We have {snake_counter} of snakes")
-
-    
-# my_zoo = Zoo()
-# my_zoo.create(animal_type="lion" , name="aa" , weight=32.0 , age=21 , special1=11.1 , special2=True , special3=10)
-# my_zoo.create(animal_type="lion" , name="aa" , weight=32.0 , age=21 , special1=11.1 , special2=True , special3=10)
-# my_zoo.create(animal_type="rat" , name="s" , weight=32.0 , age=21 , special1="green" , special2=True , special3=False)
-# my_zoo.create(animal_type="snake" , name="f" , weight=32.0 , age=21 , special1=True , special2=False , special3=11.1)
-
-
-# my_zoo.ShowList()
-# l = my_zoo.animals_list[0]
-# print(l) 
-
-# l = my_zoo.counter()
-# print(l)
-

@@ -36,10 +36,10 @@ def add_animal(animal_type , role):
                 taile_size = input("Enter lion tail size(number):")
                 herd_leader = input('Enter status herd leader of lion (True or False):')
                 strength = input("Enter strength of lion (1 to 10):")
-                if zoo.create(animal_type="lion" , name=name , weight=float(weight) , age=int(age) , special1=float(taile_size) , special2=bool(herd_leader) , special3=int(strength)):
+                if zoo.create(animal_type="lion" , name=name , weight=float(weight) , age=int(age) , taile_size=float(taile_size) , herd_leader=bool(herd_leader) , strength=int(strength)):
                     print("\nThe lion info:")
                     l = zoo.search_by_name(name=name)
-            except Exception :
+            except Exception as e:
                 print("\nYou gave the wrong input!")
 
         case "rat":
@@ -50,10 +50,10 @@ def add_animal(animal_type , role):
                 color = input("Enter rat color:")
                 climbing_ability = input("Cat this rat climnb? (True or False):")
                 digging_ability = input("Can this rat dig? (True of False):")
-                if zoo.create(animal_type="rat" , name=name , weight=float(weight) , age=int(age) , special1=color , special2=bool(climbing_ability) , special3=bool(digging_ability)):
+                if zoo.create(animal_type="rat" , name=name , weight=float(weight) , age=int(age) , color=color , climbing_ability=bool(climbing_ability) , digging_ability=bool(digging_ability)):
                     print('\n The rat info:')
                     l = zoo.search_by_name(name=name)
-            except Exception :
+            except Exception as e:
                 print("\nYou gave the wrong input!")
         case "snake":
             try:
@@ -63,10 +63,10 @@ def add_animal(animal_type , role):
                 venomous = input("Is that snake venomous?(True or False):")
                 tamed = input("Is the snake tamed?(True or False):")
                 length = input("Enter the length of this snake:")
-                if zoo.create(animal_type="snake" , name=name , weight=float(weight) , age=int(age) , special1=bool(venomous) , special2=bool(tamed)  , special3=float(length)):
+                if zoo.create(animal_type="snake" , name=name , weight=float(weight) , age=int(age) , venomous=bool(venomous) , tamed=bool(tamed)  , length=float(length)):
                     print("The snake info:")
                     zoo.search_by_name(name)
-            except Exception :
+            except Exception as e :
                     print("\nYou gave the wrong input!")
 
         case _:
