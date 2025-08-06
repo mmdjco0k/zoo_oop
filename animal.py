@@ -1,10 +1,13 @@
 from abc import ABC , abstractmethod
 import ExceptionHandeling as eh
+from CustomLogger import CustomLogger
+
+animal_logger = CustomLogger('animal.log')
 
 class Animal(ABC):
     counter = 0
     def __init__(self , name:str , weight:float , age:int ):
-        # self.validationـ(weight=weight , age=age)
+        animal_logger.info(f"create new animal name is {name}")
         self.name = name 
         self._age = age
         self._weight = weight
@@ -15,14 +18,21 @@ class Animal(ABC):
 
     def validation(self , name , weight , age):
         if not None and not isinstance(weight ,float) :
+            animal_logger.error(f"validation error weight error{weight}")
             eh.raise_error(15)
         elif weight <= 0:
             eh.raise_error(1)
+            animal_logger.error(f"validation error weight error")
+
         if not None and not isinstance(age , int) :
             eh.raise_error(16)
+            animal_logger.error(f"validation error age error")
+
         elif age<0:
+            animal_logger.error(f"validation error age error")
             eh.raise_error(2)
         if not None and not isinstance(name , str):
+            animal_logger.error(f"validation error name error")
             eh.raise_error(17)
 
     @property
@@ -93,16 +103,22 @@ class lion(Animal):
         super().validation(name=name , weight=weight , age=age)
  
         if taile_size < 0 :
+            animal_logger.error(f"validation error")
+
             eh.raise_error(6)
         elif not None and not isinstance(taile_size , float):
+            animal_logger.error(f"validation error")
             eh.raise_error(15)
         
         if  not None and not isinstance(herd_leader, bool):
+            animal_logger.error(f"validation error")
             eh.raise_error(11)
         
         if not 1 <= strength <= 10:
+            animal_logger.error(f"validation error")
             eh.raise_error(10)
         elif not None and not isinstance(strength , int):
+            animal_logger.error(f"validation error")
             eh.raise_error(16)
         
     @property
@@ -162,8 +178,10 @@ class rat(Animal):
         super().validation(name=name , weight=weight , age=age)
         
         if not None and not isinstance(climbing_ability , bool):
+            animal_logger.error(f"validation error")
             eh.raise_error(11)
         if not None and not isinstance(digging_ability , bool):
+            animal_logger.error(f"validation error")
             eh.raise_error(11)
 
     @property
@@ -220,10 +238,13 @@ class snake(Animal):
     def validation(self ,name ,weight , age , venomous , tamed , length):
         super().validation(name=name , weight=weight , age=age)
         if not None and not isinstance(venomous , bool):
+            animal_logger.error(f"validation error")
             eh.raise_error(11)
         if not None and not isinstance(tamed , bool):
+            animal_logger.error(f"validation error")
             eh.raise_error(11)
         if length is None or not isinstance(length, float):
+            animal_logger.error(f"validation error")
             eh.raise_error(15)
 
     @property

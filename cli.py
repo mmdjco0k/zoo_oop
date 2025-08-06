@@ -1,10 +1,13 @@
 import permission as p
 from zoo import Zoo
 import ExceptionHandeling as eh
+from CustomLogger import CustomLogger
+
 admin_username = "admin"
 admin_password = "admin123"
 
 zoo = Zoo()
+animal_logger = CustomLogger('animal.log')
 
 def print_menu(status):    
     match status:
@@ -41,6 +44,7 @@ def add_animal(animal_type , role):
                     print("\nThe lion info:")
                     l = zoo.search_by_name(name=name)
             except Exception as e:
+                animal_logger.error(f"validation error :{e}")
                 print("\nYou gave the wrong input!")
 
         case "rat":
@@ -55,6 +59,7 @@ def add_animal(animal_type , role):
                     print('\n The rat info:')
                     l = zoo.search_by_name(name=name)
             except Exception as e:
+                animal_logger.error(f"validation error :{e}")
                 print("\nYou gave the wrong input!")
         case "snake":
             try:
@@ -68,6 +73,7 @@ def add_animal(animal_type , role):
                     print("The snake info:")
                     zoo.search_by_name(name)
             except Exception as e :
+                    animal_logger.error(f"validation error :{e}")
                     print("\nYou gave the wrong input!")
 
         case _:
@@ -84,13 +90,16 @@ def operations(role):
                         animal_type = input("\nEnter animal type (lion , rat , snake):")
                         add_animal(animal_type=animal_type , role=role)
                 except p.PermissionError as e:
+                        animal_logger.error(f"a user try to create a new animal:{e}")
                         print(e.args[0])
             case 2:
                 try:
                     if permission(role=role):
                         animal_name = input("\nEnter animal name:")
                         zoo.destroy(name=animal_name)
+                        animal_logger.info(f'{animal_name} is deleted from list')
                 except p.PermissionError as e:
+                        animal_logger.error(f"a user try to delete an animal:{e}")
                         print(e.args[0])
             case 3:
                 zoo.ShowList()
@@ -103,7 +112,8 @@ def operations(role):
             case 6:
                 zoo.counter()
             case 7:
-                pass
+                with open('animal.log', 'r', encoding='utf-8') as file:
+                    print(file.read())            
             case 8:
                 pass
             case 9:
@@ -123,12 +133,12 @@ def login():
             case 1:
                 username = input("\nenter username : ")
                 password = input("enter password : ")
-                if (username == admin_username and admin_password == admin_password) :
-                    # print_menu("admin")
+                if (username == admin_username and password == admin_password) :
                     role = 'admin'
+                    animal_logger.info("admin logged in")
                     operations(role=role)
-                    break
                 else :
+                    animal_logger.warning("somone tried to login!")
                     print("\nusername or password is wrong!")
 
             case 2:
