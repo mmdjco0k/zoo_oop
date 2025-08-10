@@ -3,6 +3,8 @@ from zoo import Zoo
 import ExceptionHandeling as eh
 from CustomLogger import CustomLogger
 from animalDb import AnimalDb
+import json
+
 admin_username = "admin"
 admin_password = "admin123"
 
@@ -30,6 +32,7 @@ def print_menu(status):
             print('7 : get log')
             print('8 : save data in data base')
             print('9 : login')
+            print('10 : save in json')
             operation = int(input("\nenter a number : "))
             return operation
 
@@ -129,6 +132,13 @@ def operations(role):
                 try:
                     if logged_in(role):
                         login()
+                except p.PermissionError as e:
+                        print(e.args[0])
+            case 10:
+                try :
+                    if permission(role):
+                        with open("animals.json", 'w', encoding='utf-8') as file:
+                            json.dump([animal.to_json() for animal in zoo.animals_list], file)
                 except p.PermissionError as e:
                         print(e.args[0])
             case _:

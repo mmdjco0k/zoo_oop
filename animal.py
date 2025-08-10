@@ -86,6 +86,11 @@ class Animal(ABC):
         print(f"age is {self._age}")
         print(f"weight is {self._weight}")
     
+    def to_json(self):
+        dictionary = {"name":self.name , "id":self._id  , "age":self._age , "weight":self._weight}
+        return dictionary
+
+
     def make_sound(self):
         pass
 
@@ -162,6 +167,11 @@ class lion(Animal):
         print(f"The strength of the {self.name} is {self._strength}")
         print(f"The {self.name} {'is the' if self._herd_leader else 'is not the'} herd leader")
 
+    def to_json(self):
+        base = super().to_json()
+        lion_properties = {"tail_size":self._tail_size , "herd_leader":self._herd_leader , "strength":self._strength}
+        base.update(lion_properties)
+        return base
 
 
 
@@ -222,8 +232,12 @@ class rat(Animal):
         print(f"The color of {self.name} is {self._color} ")
         print(f"The {self.name} {'can' if self._climbing_ability else 'can not'} climb")
         print(f"The {self.name} {'can' if self._digging_ability else 'can not'} digging")
-
-
+   
+    def to_json(self):
+        base = super().to_json()
+        rat_properties = {"color":self._color , "climbing":self._climbing_ability , "digging":self._digging_ability}    
+        base.update(rat_properties)
+        return base
 
 
 class snake(Animal):
@@ -291,3 +305,10 @@ class snake(Animal):
         print(f"{self.name} is {'venomous' if self._venomous else 'not venomous'}")
         print(f"{self.name} is {'tamed' if self._tamed else 'not tamed'}")
         print(f'{self.name} length is {self._length}')
+
+    def to_json(self):
+        base = super().to_json()
+        snake_properties = {"venomous":self._venomous , "tamed":self._tamed , "length":self._length}
+
+        base.update(snake_properties)
+        return base
