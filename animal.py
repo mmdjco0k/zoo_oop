@@ -90,27 +90,27 @@ class Animal(ABC):
         pass
 
 class lion(Animal):
-    def __init__(self , animal_type:str , name:str , weight:float , age:int , taile_size:float , herd_leader:bool  , strength:int  ):
-        self.validation(name=name , weight=weight , age=age , taile_size=taile_size , herd_leader=herd_leader , strength=strength)
+    def __init__(self , animal_type:str , name:str , weight:float , age:int , tail_size:float , herd_leader:bool  , strength:int  ):
+        self.validation(name=name , weight=weight , age=age , tail_size=tail_size , herd_leader=herd_leader , strength=strength)
         super().__init__(name, weight, age)
         self._animal_type = animal_type
-        self._taile_size = taile_size
+        self._tail_size = tail_size
         self._herd_leader = herd_leader
         self._strength = strength
     
 
-    def validation(self, name , weight, age, taile_size , herd_leader , strength):
+    def validation(self, name , weight, age, tail_size , herd_leader , strength):
         super().validation(name=name , weight=weight , age=age)
  
-        if taile_size < 0 :
+        if tail_size < 0 :
             animal_logger.error(f"validation error")
 
             eh.raise_error(6)
-        elif not None and not isinstance(taile_size , float):
+        elif not None and not isinstance(tail_size , float):
             animal_logger.error(f"validation error")
             eh.raise_error(15)
         
-        if  not None and not isinstance(herd_leader, bool):
+        if  not isinstance(herd_leader, bool):
             animal_logger.error(f"validation error")
             eh.raise_error(11)
         
@@ -122,14 +122,14 @@ class lion(Animal):
             eh.raise_error(16)
         
     @property
-    def taile_size(self):
-        return f"The size of the {self.name} tail is {self._taile_size} cm"
+    def tail_size(self):
+        return f"The size of the {self.name} tail is {self._tail_size} cm"
 
-    @taile_size.setter
-    def taile_size(self , new_size):
+    @tail_size.setter
+    def tail_size(self , new_size):
         if new_size < 0 :
             eh.raise_error(6)
-        self._taile_size = new_size
+        self._tail_size = new_size
     @property
     def strength(self):
             return f"The strength of the {self.name} is {self._strength}"
@@ -158,7 +158,7 @@ class lion(Animal):
     
     def info(self):
         super().info()
-        print(f"The size of the {self.name} tail is {self._taile_size} cm")
+        print(f"The size of the {self.name} tail is {self._tail_size} cm")
         print(f"The strength of the {self.name} is {self._strength}")
         print(f"The {self.name} {'is the' if self._herd_leader else 'is not the'} herd leader")
 

@@ -1,12 +1,14 @@
 import animal
 import ExceptionHandeling as eh
-
+import sqlite3
+import json
+import pickle
+import animalDb
 
 def create_animal(animal_type , name , weight , age , **kwargs):
     match animal_type:
         case "lion":
             return animal.lion(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
-            
         case "rat":
             return animal.rat(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
         case "snake":
@@ -16,8 +18,7 @@ def create_animal(animal_type , name , weight , age , **kwargs):
 
 
 class Zoo:
-    def __init__(self):
-        # self.create(self , animal_type , name , weight , age  , special)
+    def __init__(self ):
         self.animals_list = []
     
     def validation(self , name):
@@ -29,7 +30,7 @@ class Zoo:
         try:
             self.validation(name)
             animal = create_animal(animal_type , name , weight , age , **kwargs)
-            print(animal)
+            print("animal:",animal)
             self.animals_list.append(animal)
             return True
         except eh.InvalidInput as e:

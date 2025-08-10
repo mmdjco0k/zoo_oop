@@ -2,12 +2,15 @@ import permission as p
 from zoo import Zoo
 import ExceptionHandeling as eh
 from CustomLogger import CustomLogger
-
+from animalDb import AnimalDb
 admin_username = "admin"
 admin_password = "admin123"
 
 zoo = Zoo()
 animal_logger = CustomLogger('animal.log')
+
+db = AnimalDb()
+zoo.animals_list=db.get_animals()
 
 def print_menu(status):    
     match status:
@@ -25,7 +28,7 @@ def print_menu(status):
             print('5 : search by the id')
             print('6 : counting the number of animals of each species')
             print('7 : get log')
-            print('8 : save and recover data')
+            print('8 : save data in data base')
             print('9 : login')
             operation = int(input("\nenter a number : "))
             return operation
@@ -37,10 +40,10 @@ def add_animal(animal_type , role):
                 name = input("Enter lion name:")
                 weight = input("Enter lion weight(number):")
                 age = input("Enter lion age(number):")
-                taile_size = input("Enter lion tail size(number):")
+                tail_size = input("Enter lion tail size(number):")
                 herd_leader = input('Enter status herd leader of lion (True or False):')
                 strength = input("Enter strength of lion (1 to 10):")
-                if zoo.create(animal_type="lion" , name=name , weight=float(weight) , age=int(age) , taile_size=float(taile_size) , herd_leader=bool(herd_leader) , strength=int(strength)):
+                if zoo.create(animal_type="lion" , name=name , weight=float(weight) , age=int(age) , tail_size=float(tail_size) , herd_leader=bool(herd_leader) , strength=int(strength)):
                     print("\nThe lion info:")
                     l = zoo.search_by_name(name=name)
             except Exception as e:
@@ -115,7 +118,13 @@ def operations(role):
                 with open('animal.log', 'r', encoding='utf-8') as file:
                     print(file.read())            
             case 8:
-                pass
+                try:
+                    if permission(role=role):
+                        db.save_to_db(zoo.animals_list)
+                        print("\nSuccesfully saved.")
+                except p.PermissionError as e:
+                        animal_logger.error(f"a user try to delete an animal:{e}")
+                        print(e.args[0])
             case 9:
                 try:
                     if logged_in(role):
