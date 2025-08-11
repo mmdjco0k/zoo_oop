@@ -30,7 +30,6 @@ class Zoo:
         try:
             self.validation(name)
             animal = create_animal(animal_type , name , weight , age , **kwargs)
-            print("animal:",animal)
             self.animals_list.append(animal)
             return True
         except eh.InvalidInput as e:

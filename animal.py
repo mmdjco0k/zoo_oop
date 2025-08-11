@@ -119,12 +119,13 @@ class lion(Animal):
             animal_logger.error(f"validation error")
             eh.raise_error(11)
         
-        if not 1 <= strength <= 10:
-            animal_logger.error(f"validation error")
-            eh.raise_error(10)
-        elif not None and not isinstance(strength , int):
+        if not None and not isinstance(strength , int):
             animal_logger.error(f"validation error")
             eh.raise_error(16)
+        elif not 1 <= strength <= 10:
+            animal_logger.error(f"validation error")
+            eh.raise_error(10)
+
         
     @property
     def tail_size(self):
