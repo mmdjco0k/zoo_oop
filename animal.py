@@ -258,7 +258,7 @@ class snake(Animal):
         if not None and not isinstance(tamed , bool):
             animal_logger.error(f"validation error")
             eh.raise_error(11)
-        if length is None or not isinstance(length, float):
+        if not None and not isinstance(length, float):
             animal_logger.error(f"validation error")
             eh.raise_error(15)
 

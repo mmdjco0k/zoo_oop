@@ -129,6 +129,11 @@ class LionTest(unittest.TestCase):
             herd_leader=self.herd_leader,
             strength=self.strength
         )
+    def test_make_sound(self):
+        lion = animal.lion(animal_type=self.animal_type , name=self.name , age=self.age , weight=self.weight , tail_size=self.tail_size , strength=self.strength , herd_leader=self.herd_leader)
+        sound = lion.make_sound()
+        self.assertEqual(sound , "Roar")
+        
 
 if __name__ == '__main__':
     unittest.main()
