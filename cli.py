@@ -2,7 +2,7 @@ import permission as p
 from zoo import Zoo
 import ExceptionHandeling as eh
 from CustomLogger import CustomLogger
-from animalDb import AnimalDb
+from animalDb import AnimalStorage
 import json
 
 admin_username = "admin"
@@ -11,8 +11,8 @@ admin_password = "admin123"
 zoo = Zoo()
 animal_logger = CustomLogger('animal.log')
 
-db = AnimalDb()
-zoo.animals_list=db.get_animals()
+storage = AnimalStorage()
+zoo.animals_list=storage.get_animals()
 
 def print_menu(status):    
     match status:
@@ -30,9 +30,8 @@ def print_menu(status):
             print('5 : search by the id')
             print('6 : counting the number of animals of each species')
             print('7 : get log')
-            print('8 : save data in data base')
+            print('8 : save data storage')
             print('9 : login')
-            print('10 : save in json')
             operation = int(input("\nenter a number : "))
             return operation
 
@@ -123,8 +122,9 @@ def operations(role):
             case 8:
                 try:
                     if permission(role=role):
-                        db.save_to_db(zoo.animals_list)
-                        print("\nSuccesfully saved.")
+                        storage.save_to_db(zoo.animals_list)
+                        storage.save_to_json()
+                        print("\nData succesfully saved.")
                 except p.PermissionError as e:
                         animal_logger.error(f"a user try to delete an animal:{e}")
                         print(e.args[0])
@@ -132,13 +132,6 @@ def operations(role):
                 try:
                     if logged_in(role):
                         login()
-                except p.PermissionError as e:
-                        print(e.args[0])
-            case 10:
-                try :
-                    if permission(role):
-                        with open("animals.json", 'w', encoding='utf-8') as file:
-                            json.dump([animal.to_json() for animal in zoo.animals_list], file)
                 except p.PermissionError as e:
                         print(e.args[0])
             case _:

@@ -1,7 +1,8 @@
 import sqlite3
 import animal 
 import pickle
-class AnimalDb:
+import json
+class AnimalStorage:
     def __init__(self , DbName = 'a.db'):
         self.conn = sqlite3.connect(DbName)
         self.cursor = self.conn.cursor()
@@ -30,3 +31,6 @@ class AnimalDb:
             self.animal_list.append(animal_data)
         return self.animal_list
 
+    def save_to_json(self):
+        with open("animals.json", 'w', encoding='utf-8') as file:
+            json.dump([animal.to_json() for animal in self.animal_list], file)
