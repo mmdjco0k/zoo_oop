@@ -5,22 +5,23 @@ import json
 import pickle
 import animalDb
 
-def create_animal(animal_type , name , weight , age , **kwargs):
-    match animal_type:
-        case "lion":
-            return animal.lion(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
-        case "rat":
-            return animal.rat(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
-        case "snake":
-            return animal.snake(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
-        case _:
-            eh.raise_error(7)
-
 
 class Zoo:
     def __init__(self ):
         self.animals_list = []
     
+    @staticmethod
+    def create_animal(animal_type , name , weight , age , **kwargs):
+        match animal_type:
+            case "lion":
+                return animal.lion(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
+            case "rat":
+                return animal.rat(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
+            case "snake":
+                return animal.snake(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
+            case _:
+                eh.raise_error(7)
+
     def validation(self , name):
         for i in self.animals_list:
             if i.name == name :
@@ -29,7 +30,7 @@ class Zoo:
     def create(self , animal_type , name , weight , age , **kwargs):
         try:
             self.validation(name)
-            animal = create_animal(animal_type , name , weight , age , **kwargs)
+            animal = self.create_animal(animal_type , name , weight , age , **kwargs)
             self.animals_list.append(animal)
             return True
         except eh.InvalidInput as e:
