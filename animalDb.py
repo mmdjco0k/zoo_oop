@@ -2,7 +2,17 @@ import sqlite3
 import animal 
 import pickle
 import json
-class AnimalStorage:
+from abc import ABC , abstractmethod
+class Storage(ABC):
+    @abstractmethod
+    def save(self , animals):
+        pass
+
+    @abstractmethod
+    def load(self):
+        pass
+
+class SqliteStorage(Storage):
     def __init__(self , DbName = 'a.db'):
         self.conn = sqlite3.connect(DbName)
         self.cursor = self.conn.cursor()
@@ -16,21 +26,38 @@ class AnimalStorage:
             )
         ''')
         self.conn.commit()
-    def save_to_db(self , animals):
+    def save(self , animals):
         self.cursor.execute('''DELETE FROM animals''')
-
         for animal in animals:
-           self.cursor.execute('INSERT INTO animals (animal) VALUES (?)', (pickle.dumps(animal),))
+            self.cursor.execute('INSERT INTO animals (animal) VALUES (?)',
+                              (pickle.dumps(animal),))
         self.conn.commit()
     
-    def get_animals(self):
+    def load(self):
         self.cursor.execute('SELECT animal FROM animals')
         animals = self.cursor.fetchall()
+        animal_list = []
         for animal in animals:
             animal_data = pickle.loads(animal[0])
-            self.animal_list.append(animal_data)
-        return self.animal_list
+            animal_list.append(animal_data)
+        return animal_list
 
-    def save_to_json(self):
-        with open("animals.json", 'w', encoding='utf-8') as file:
-            json.dump([animal.to_json() for animal in self.animal_list], file)
+
+class AnimalStorage:    
+    def __init__(self, storage=None):
+        self.storage = storage
+        self.animal_list = []
+
+    @classmethod
+    def create_with_strategy(cls, storage):
+        strategies = {
+            'sqlite': SqliteStorage(),
+        }
+        return cls(strategies.get(storage))
+    
+    def save(self, animals):
+        self.storage.save(animals)
+    
+    def load(self):
+        self.animal_list = self.storage.load()
+        return self.animal_list

@@ -26,7 +26,6 @@ class Zoo:
         for i in self.animals_list:
             if i.name == name :
                 eh.raise_error(9)
-
     def create(self , animal_type , name , weight , age , **kwargs):
         try:
             self.validation(name)

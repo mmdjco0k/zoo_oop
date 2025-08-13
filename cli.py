@@ -11,8 +11,8 @@ admin_password = "admin123"
 zoo = Zoo()
 animal_logger = CustomLogger('animal.log')
 
-storage = AnimalStorage()
-zoo.animals_list=storage.get_animals()
+storage = AnimalStorage.create_with_strategy(storage="sqlite")
+zoo.animals_list=storage.load()
 
 def print_menu(status):    
     match status:
@@ -122,8 +122,7 @@ def operations(role):
             case 8:
                 try:
                     if permission(role=role):
-                        storage.save_to_db(zoo.animals_list)
-                        storage.save_to_json()
+                        storage.save(zoo.animals_list)
                         print("\nData succesfully saved.")
                 except p.PermissionError as e:
                         animal_logger.error(f"a user try to delete an animal:{e}")
