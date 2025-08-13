@@ -2,3 +2,4 @@ animal.log
 test.py
 *.db
 animals.json
+animals.csv

@@ -11,7 +11,7 @@ admin_password = "admin123"
 zoo = Zoo()
 animal_logger = CustomLogger('animal.log')
 
-storage = AnimalStorage.create_with_strategy(storage="sqlite")
+storage = AnimalStorage.create_with_strategy(storage="csv")
 zoo.animals_list=storage.load()
 
 def print_menu(status):    

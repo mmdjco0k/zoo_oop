@@ -7,7 +7,6 @@ animal_logger = CustomLogger('animal.log')
 class Animal(ABC):
     counter = 0
     def __init__(self , name:str , weight:float , age:int ):
-        animal_logger.info(f"create new animal name is {name}")
         self.name = name 
         self._age = age
         self._weight = weight
@@ -106,7 +105,19 @@ class Animal(ABC):
                 return snake.from_json(data)
             case _:
                 eh.raise_error(7)
-
+    
+    @classmethod
+    def from_csv(clas , data):
+        animal_type = data.get("animal_type")
+        match animal_type:
+            case "lion":
+                return lion.from_csv(data)
+            case "rat":
+                return rat.from_csv(data)
+            case "snake":
+                return snake.from_csv(data)
+            case _:
+                eh.raise_error(7)
 
 class lion(Animal):
     def __init__(self , animal_type:str , name:str , weight:float , age:int , tail_size:float , herd_leader:bool  , strength:int  ):
@@ -200,6 +211,17 @@ class lion(Animal):
             strength=data['strength']
         )        
 
+    @classmethod
+    def from_csv(cls  , data):
+        return cls(
+            animal_type=data['animal_type'],
+            name=data['name'],
+            weight=float(data['weight']),
+            age=int(data['age']),
+            tail_size=float(data['tail_size']),
+            herd_leader=bool(data['herd_leader']),
+            strength=int(data['strength'])
+        )
 
 
 class rat(Animal):
@@ -278,6 +300,17 @@ class rat(Animal):
             digging_ability=data['digging']
         )
 
+    @classmethod
+    def from_csv(cls , data):
+        return cls(
+            animal_type=data['animal_type'],
+            name=data['name'],
+            weight=float(data['weight']),
+            age=int(data['age']),
+            color=data['color'],
+            climbing_ability=bool(data['climbing']),
+            digging_ability=bool(data['digging'])
+        )
 class snake(Animal):
     def __init__(self , animal_type:str , name:str , weight:float , age:int ,venomous: bool , tamed : bool , length:float ):
         self.validation(name=name , weight=weight , age=age , venomous=venomous , tamed=tamed , length=length)
@@ -361,4 +394,16 @@ class snake(Animal):
             venomous=data['venomous'],
             tamed=data['tamed'],
             length=data['length']
+        )
+    
+    @classmethod
+    def from_csv(cls , data):
+        return cls(
+            animal_type=data['animal_type'],
+            name=data['name'],
+            weight=float(data['weight']),
+            age=int(data['age']),
+            venomous=bool(data['venomous']),
+            tamed=bool(data['tamed']),
+            length=float(data['length'])
         )
