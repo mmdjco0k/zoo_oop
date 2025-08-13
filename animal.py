@@ -87,12 +87,26 @@ class Animal(ABC):
         print(f"weight is {self._weight}")
     
     def to_json(self):
-        dictionary = {"name":self.name , "id":self._id  , "age":self._age , "weight":self._weight}
+        dictionary = {"animal_type":self.animal_type ,"name":self.name , "id":self._id  , "age":self._age , "weight":self._weight}
         return dictionary
 
 
     def make_sound(self):
         pass
+
+    @classmethod
+    def from_json(cls , data):
+        animal_type = data.get('animal_type')
+        match animal_type:
+            case "lion":
+                return lion.from_json(data)
+            case "rat":
+                return rat.from_json(data)
+            case "snake":
+                return snake.from_json(data)
+            case _:
+                eh.raise_error(7)
+
 
 class lion(Animal):
     def __init__(self , animal_type:str , name:str , weight:float , age:int , tail_size:float , herd_leader:bool  , strength:int  ):
@@ -173,6 +187,18 @@ class lion(Animal):
         lion_properties = {"tail_size":self._tail_size , "herd_leader":self._herd_leader , "strength":self._strength}
         base.update(lion_properties)
         return base
+    
+    @classmethod
+    def from_json(cls , data):
+        return cls(
+            animal_type=data['animal_type'],
+            name=data['name'],
+            weight=data['weight'],
+            age=data['age'],
+            tail_size=data['tail_size'],
+            herd_leader=data['herd_leader'],
+            strength=data['strength']
+        )        
 
 
 
@@ -240,6 +266,17 @@ class rat(Animal):
         base.update(rat_properties)
         return base
 
+    @classmethod
+    def from_json(cls, data):
+        return cls(
+            animal_type=data['animal_type'],
+            name=data['name'],
+            weight=data['weight'],
+            age=data['age'],
+            color=data['color'],
+            climbing_ability=data['climbing'],
+            digging_ability=data['digging']
+        )
 
 class snake(Animal):
     def __init__(self , animal_type:str , name:str , weight:float , age:int ,venomous: bool , tamed : bool , length:float ):
@@ -313,3 +350,15 @@ class snake(Animal):
 
         base.update(snake_properties)
         return base
+    
+    @classmethod
+    def from_json(cls, data):
+        return cls(
+            animal_type=data['animal_type'],
+            name=data['name'],
+            weight=data['weight'],
+            age=data['age'],
+            venomous=data['venomous'],
+            tamed=data['tamed'],
+            length=data['length']
+        )

@@ -1,1 +1,1 @@
-[{"name": "mkm", "id": 0, "age": 3, "weight": 2.0, "venomous": true, "tamed": true, "length": 2.0}, {"name": "zdawd", "id": 0, "age": 3, "weight": 2.0, "tail_size": 2.0, "herd_leader": true, "strength": 1}]
+[{"animal_type": "lion", "name": "lio", "id": 0, "age": 3, "weight": 2.0, "tail_size": 2.0, "herd_leader": true, "strength": 2}, {"animal_type": "rat", "name": "r", "id": 1, "age": 3, "weight": 2.0, "color": "c", "climbing": true, "digging": true}]

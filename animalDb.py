@@ -1,7 +1,8 @@
 import sqlite3
-import animal 
+from animal import Animal
 import pickle
 import json
+
 from abc import ABC , abstractmethod
 class Storage(ABC):
     @abstractmethod
@@ -42,6 +43,19 @@ class SqliteStorage(Storage):
             animal_list.append(animal_data)
         return animal_list
 
+class JsonStorage(Storage):
+    def __init__(self, file_name='animals.json'):
+        self.file_name = file_name
+    
+    def save(self, animals):
+        with open(self.file_name, 'w', encoding='utf-8') as file:
+            json.dump([animal.to_json() for animal in animals], file)
+    
+    def load(self):
+        with open(self.file_name, 'r', encoding='utf-8') as file:
+            animals_data = json.load(file)
+        return [Animal.from_json(data) for data in animals_data]
+
 
 class AnimalStorage:    
     def __init__(self, storage=None):
@@ -51,7 +65,8 @@ class AnimalStorage:
     @classmethod
     def create_with_strategy(cls, storage):
         strategies = {
-            'sqlite': SqliteStorage(),
+            'sqlite' : SqliteStorage(),
+            'json' : JsonStorage()
         }
         return cls(strategies.get(storage))
     
