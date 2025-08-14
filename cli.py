@@ -30,8 +30,7 @@ def print_menu(status):
             print('5 : search by the id')
             print('6 : counting the number of animals of each species')
             print('7 : get log')
-            print('8 : save data storage')
-            print('9 : login')
+            print('8 : login')
             operation = int(input("\nenter a number : "))
             return operation
 
@@ -46,6 +45,7 @@ def add_animal(animal_type , role):
                 herd_leader = input('Enter status herd leader of lion (True or False):')
                 strength = input("Enter strength of lion (1 to 10):")
                 if zoo.create(animal_type="lion" , name=name , weight=float(weight) , age=int(age) , tail_size=float(tail_size) , herd_leader=bool(herd_leader) , strength=int(strength)):
+                    storage.save(zoo.animals_list)
                     print("\nThe lion info:")
                     l = zoo.search_by_name(name=name)
             except Exception as e:
@@ -61,6 +61,7 @@ def add_animal(animal_type , role):
                 climbing_ability = input("Cat this rat climnb? (True or False):")
                 digging_ability = input("Can this rat dig? (True of False):")
                 if zoo.create(animal_type="rat" , name=name , weight=float(weight) , age=int(age) , color=color , climbing_ability=bool(climbing_ability) , digging_ability=bool(digging_ability)):
+                    storage.save(zoo.animals_list)
                     print('\n The rat info:')
                     l = zoo.search_by_name(name=name)
             except Exception as e:
@@ -75,6 +76,7 @@ def add_animal(animal_type , role):
                 tamed = input("Is the snake tamed?(True or False):")
                 length = input("Enter the length of this snake:")
                 if zoo.create(animal_type="snake" , name=name , weight=float(weight) , age=int(age) , venomous=bool(venomous) , tamed=bool(tamed)  , length=float(length)):
+                    storage.save(zoo.animals_list)
                     print("The snake info:")
                     zoo.search_by_name(name)
             except Exception as e :
@@ -120,14 +122,6 @@ def operations(role):
                 with open('animal.log', 'r', encoding='utf-8') as file:
                     print(file.read())            
             case 8:
-                try:
-                    if permission(role=role):
-                        storage.save(zoo.animals_list)
-                        print("\nData succesfully saved.")
-                except p.PermissionError as e:
-                        animal_logger.error(f"a user try to delete an animal:{e}")
-                        print(e.args[0])
-            case 9:
                 try:
                     if logged_in(role):
                         login()

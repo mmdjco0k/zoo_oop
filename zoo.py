@@ -1,4 +1,6 @@
-import animal
+from animals.lion import Lion
+from animals.snake import Snake
+from animals.rat import Rat
 import ExceptionHandeling as eh
 import sqlite3
 import json
@@ -14,11 +16,11 @@ class Zoo:
     def create_animal(animal_type , name , weight , age , **kwargs):
         match animal_type:
             case "lion":
-                return animal.lion(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
+                return Lion(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
             case "rat":
-                return animal.rat(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
+                return Rat(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
             case "snake":
-                return animal.snake(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
+                return Snake(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
             case _:
                 eh.raise_error(7)
 

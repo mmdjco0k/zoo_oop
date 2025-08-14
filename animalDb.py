@@ -1,5 +1,5 @@
 import sqlite3
-from animal import Animal
+from animals.animal import Animal
 import pickle
 import json
 import csv
