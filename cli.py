@@ -62,12 +62,10 @@ def add_animal(animal_type, role):
             
         properties = {}
         for prop in animal_properties[animal_type]:
-            print("prop is :" , prop)
             input_prop = input(f"Enter {prop}:")
             
             if prop in property_types[animal_type]:
                 prop_type = property_types[animal_type][prop]
-                print(prop_type)
                 input_prop = prop_type(input_prop)
                 
             properties[prop] = input_prop
