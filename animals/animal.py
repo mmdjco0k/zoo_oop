@@ -92,11 +92,18 @@ class Animal(ABC):
         animal_type = data.get('animal_type')
         match animal_type:
             case "lion":
-                return lion.from_json(data)
+                from .lion import Lion  
+
+                return Lion.from_json(data)
             case "rat":
-                return rat.from_json(data)
+                from .rat import Rat
+
+
+                return Rat.from_json(data)
             case "snake":
-                return snake.from_json(data)
+                from .snake import Snake
+
+                return Snake.from_json(data)
             case _:
                 eh.raise_error(7)
     
