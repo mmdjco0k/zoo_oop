@@ -34,58 +34,51 @@ def print_menu(status):
             operation = int(input("\nenter a number : "))
             return operation
 
-def add_animal(animal_type , role):
-    match animal_type:
-        case "lion":
-            try:
-                name = input("Enter lion name:")
-                weight = input("Enter lion weight(number):")
-                age = input("Enter lion age(number):")
-                tail_size = input("Enter lion tail size(number):")
-                herd_leader = input('Enter status herd leader of lion (True or False):')
-                strength = input("Enter strength of lion (1 to 10):")
-                if zoo.create(animal_type="lion" , name=name , weight=float(weight) , age=int(age) , tail_size=float(tail_size) , herd_leader=bool(herd_leader) , strength=int(strength)):
-                    storage.save(zoo.animals_list)
-                    print("\nThe lion info:")
-                    l = zoo.search_by_name(name=name)
-            except Exception as e:
-                animal_logger.error(f"validation error :{e}")
-                print("\nYou gave the wrong input!")
+def add_animal(animal_type, role):
+    animal_properties = {
+        "lion": ["name", "weight", "age", "tail_size", "herd_leader", "strength"],
 
-        case "rat":
-            try:
-                name = input("Enter rat name:")
-                weight = input("Enter rat weight(number):")
-                age = input("Enter rat age(number):")
-                color = input("Enter rat color:")
-                climbing_ability = input("Cat this rat climnb? (True or False):")
-                digging_ability = input("Can this rat dig? (True of False):")
-                if zoo.create(animal_type="rat" , name=name , weight=float(weight) , age=int(age) , color=color , climbing_ability=bool(climbing_ability) , digging_ability=bool(digging_ability)):
-                    storage.save(zoo.animals_list)
-                    print('\n The rat info:')
-                    l = zoo.search_by_name(name=name)
-            except Exception as e:
-                animal_logger.error(f"validation error :{e}")
-                print("\nYou gave the wrong input!")
-        case "snake":
-            try:
-                name = input("Enter snake name:")
-                weight = input("Enter snake weight(number):")
-                age = input("Enter snake age(number):")
-                venomous = input("Is that snake venomous?(True or False):")
-                tamed = input("Is the snake tamed?(True or False):")
-                length = input("Enter the length of this snake:")
-                if zoo.create(animal_type="snake" , name=name , weight=float(weight) , age=int(age) , venomous=bool(venomous) , tamed=bool(tamed)  , length=float(length)):
-                    storage.save(zoo.animals_list)
-                    print("The snake info:")
-                    zoo.search_by_name(name)
-            except Exception as e :
-                    animal_logger.error(f"validation error :{e}")
-                    print("\nYou gave the wrong input!")
+        "rat": ["name", "weight", "age", "color", "climbing_ability", "digging_ability"],
 
-        case _:
+        "snake": ["name", "weight", "age", "venomous", "tamed", "length"]
+    }
+    
+    property_types = {
+        "lion": {"weight": float, "age": int, "tail_size": float, "herd_leader": bool, "strength": int},
+
+        "rat": {"weight": float, "age": int, "climbing_ability": bool,"digging_ability": bool},
+
+        "snake": {"weight": float, "age": int, "venomous": bool,"tamed": bool, "length": float}
+    }
+    
+    try:
+        if animal_type not in animal_properties:
             print('\nInvalid input!')
-    operations(role=role)
+            operations(role=role)
+            return
+            
+        properties = {}
+        for prop in animal_properties[animal_type]:
+            print("prop is :" , prop)
+            input_prop = input(f"Enter {prop}:")
+            
+            if prop in property_types[animal_type]:
+                prop_type = property_types[animal_type][prop]
+                print(prop_type)
+                input_prop = prop_type(input_prop)
+                
+            properties[prop] = input_prop
+        
+        if zoo.create(animal_type=animal_type, **properties):
+            storage.save(zoo.animals_list)
+            print(f"\nThe {animal_type} info:")
+            zoo.search_by_name(name=properties['name'])
+            
+    except Exception as e:
+        animal_logger.error(f"validation error :{e}")
+        print("\nYou gave the wrong input!")
+
+
 
 def operations(role):
     while True:

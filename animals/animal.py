@@ -119,7 +119,7 @@ class Animal(ABC):
                 return Rat.from_csv(data)
             case "snake":
                 from .snake import Snake
-                return snake.from_csv(data)
+                return Snake.from_csv(data)
             case _:
                 eh.raise_error(7)
 
