@@ -3,6 +3,7 @@ from zoo import Zoo
 import ExceptionHandeling as eh
 from CustomLogger import CustomLogger
 from animalDb import AnimalStorage
+from utils import print_info
 import json
 
 admin_username = "admin"
@@ -78,8 +79,6 @@ def add_animal(animal_type, role):
         animal_logger.error(f"validation error :{e}")
         print("\nYou gave the wrong input!")
 
-
-
 def operations(role):
     while True:
         operation = print_menu('operations')
@@ -105,10 +104,13 @@ def operations(role):
                 zoo.ShowList()
             case 4:
                 name = input('Enter the name of animal:')
-                zoo.search_by_name(name=name)
+                animal = zoo.search_by_name(name=name)
+                print_info(animal.to_json())
+
             case 5:
                 id = input('Enter the id of animal:')
-                zoo.search_by_id(id=id)
+                animal = zoo.search_by_id(id=id)
+                print_info(animal.to_json())
             case 6:
                 zoo.counter()
             case 7:

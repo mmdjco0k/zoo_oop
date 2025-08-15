@@ -54,13 +54,8 @@ class Rat(Animal):
     
     def make_sound(self):
         return "hisses"
-    
-    def info(self):
-        super().info()
-        print(f"The color of {self.name} is {self._color} ")
-        print(f"The {self.name} {'can' if self._climbing_ability else 'can not'} climb")
-        print(f"The {self.name} {'can' if self._digging_ability else 'can not'} digging")
-   
+
+
     def to_json(self):
         base = super().to_json()
         rat_properties = {"color":self._color , "climbing":self._climbing_ability , "digging":self._digging_ability}    

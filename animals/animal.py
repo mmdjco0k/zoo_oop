@@ -79,12 +79,6 @@ class Animal(ABC):
         return f"The {self.name} is sleeping"
     
     
-    def info(self):
-        print(f"\nname is {self.name}")
-        print(f"id is {self._id}")
-        print(f"age is {self._age}")
-        print(f"weight is {self._weight}")
-    
     def to_json(self):
         dictionary = {"animal_type":self.animal_type ,"name":self.name , "id":self._id  , "age":self._age , "weight":self._weight}
         return dictionary

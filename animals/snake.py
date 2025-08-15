@@ -61,12 +61,7 @@ class Snake(Animal):
 
     def make_sound(self):
         return "sisss"
-    
-    def info(self):
-        super().info()
-        print(f"{self.name} is {'venomous' if self._venomous else 'not venomous'}")
-        print(f"{self.name} is {'tamed' if self._tamed else 'not tamed'}")
-        print(f'{self.name} length is {self._length}')
+
 
     def to_json(self):
         base = super().to_json()

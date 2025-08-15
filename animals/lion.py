@@ -72,11 +72,6 @@ class Lion(Animal):
     def make_sound(self):
         return "Roar"
     
-    def info(self):
-        super().info()
-        print(f"The size of the {self.name} tail is {self._tail_size} cm")
-        print(f"The strength of the {self.name} is {self._strength}")
-        print(f"The {self.name} {'is the' if self._herd_leader else 'is not the'} herd leader")
 
     def to_json(self):
         base = super().to_json()
