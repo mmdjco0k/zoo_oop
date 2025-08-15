@@ -6,7 +6,6 @@ import sqlite3
 import json
 import pickle
 import animalDb
-from utils import print_info
 
 class Zoo:
     def __init__(self ):
@@ -42,6 +41,8 @@ class Zoo:
         for AnimalObject in self.animals_list :
 
             if AnimalObject.name == name :
+                from cli import print_info
+
                 print_info(AnimalObject.to_json())
                 i = input("\nare you sure you want to destroy this animal ( y / n ) :")
                 if i == 'y':
@@ -62,6 +63,8 @@ class Zoo:
         if len(self.animals_list) != 0:
             for AnimalObject in self.animals_list:
                 print("\n")
+                from cli import print_info
+
                 print_info(AnimalObject.to_json())
         else :
             print("\nThere is no animal in the zoo")
