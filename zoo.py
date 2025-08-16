@@ -57,6 +57,8 @@ class Zoo:
         if self.check_permission(role, 'destroy'):
             self.animals_list.remove(animal)
             del animal
+            return True
+        return False
         
     def ShowList(self , role):
         if self.check_permission(role, 'show_list'):

@@ -5,10 +5,8 @@ import ExceptionHandeling as eh
 from CustomLogger import CustomLogger
 from animalDb import AnimalStorage
 from animals.animal import Animal
+from authorization import login
 import json
-
-admin_username = "admin"
-admin_password = "admin123"
 
 zoo = Zoo()
 animal_logger = CustomLogger('animal.log')
@@ -43,25 +41,17 @@ def print_info(animal):
             print(f"{animal["name"]} is {'tamed' if animal["tamed"] else 'not tamed'}")
             print(f'{animal["name"]} length is {animal["length"]}')
 
-def print_menu(status):    
-    match status:
-        case "start":
-            print('\n1 : login as admin')
-            print('2 : enter as user (no login requierd)')
-            user_input = int(input("\nEnter a number : "))
-            return user_input
-
-        case "operations":
-            print('\n1 : add animal')
-            print('2 : delete animal')
-            print('3 : show all animal')
-            print('4 : search by the name')
-            print('5 : search by the id')
-            print('6 : counting the number of animals of each species')
-            print('7 : get log')
-            print('8 : login')
-            operation = int(input("\nenter a number : "))
-            return operation
+def print_menu():    
+    print('\n1 : add animal')
+    print('2 : delete animal')
+    print('3 : show all animal')
+    print('4 : search by the name')
+    print('5 : search by the id')
+    print('6 : counting the number of animals of each species')
+    print('7 : get log')
+    print('8 : login')
+    operation = int(input("\nenter a number : "))
+    return operation
 
 def add_animal(animal_type, role):
     animal_properties = {
@@ -107,7 +97,7 @@ def add_animal(animal_type, role):
 
 def operations(role):
     while True:
-        operation = print_menu('operations')
+        operation = print_menu()
         match operation:
             case 1:
                 animal_type = input("\nEnter animal type (lion , rat , snake):")
@@ -118,9 +108,9 @@ def operations(role):
                     if isinstance(animal , Animal):
                         input_qu = input("\nare you sure you want to destroy this animal ( y / n ) :")
                         if input_qu == 'y':
-                            zoo.destroy(role=role , animal=animal)
-                            print('the animal is deleted')
-                            storage.save(zoo.animals_list)
+                            if zoo.destroy(role=role , animal=animal):
+                                print('the animal is deleted')
+                                storage.save(zoo.animals_list)
                         elif input_qu == 'n':
                             print('ok')
                         else :
@@ -149,32 +139,13 @@ def operations(role):
             case 8:
                 try:
                     if not custom_permission.logged_in(role=role):
-                        login()
+                        role = login()
                 except p.PermissionError as e:
                         print(e.args[0])
             case _:
                 print("\ninvalid input!")
 
 
-def login():
-    while True:
-        user_input = print_menu('start')
-        match user_input:
-            case 1:
-                username = input("\nenter username : ")
-                password = input("enter password : ")
-                if (username == admin_username and password == admin_password) :
-                    role = 'admin'
-                    animal_logger.info("admin logged in")
-                    operations(role=role)
-                else :
-                    animal_logger.warning("somone tried to login!")
-                    print("\nusername or password is wrong!")
 
-            case 2:
-                operations(role=role)
-                break
-            case _:
-                print('\nyour input is invalid!s')
 
 operations('user')
