@@ -1,20 +1,14 @@
+from permission import custom_permission
 import permission as p
 from zoo import Zoo
 import ExceptionHandeling as eh
 from CustomLogger import CustomLogger
 from animalDb import AnimalStorage
+from animals.animal import Animal
 import json
 
-admin_username = "admin"
-admin_password = "admin123"
 
-zoo = Zoo()
-animal_logger = CustomLogger('animal.log')
 
-storage_type = input('Enter storage tyoe (csv , json ,sqlite): ')
-storage = AnimalStorage.create_with_strategy(storage=storage_type)
-
-zoo.animals_list=storage.load()
 
 def print_info(animal):
     print(f"\nname is {animal["name"]}")
@@ -90,10 +84,10 @@ def add_animal(animal_type, role):
                 
             properties[prop] = input_prop
         
-        if zoo.create(animal_type=animal_type, **properties):
+        if zoo.create(role=role ,animal_type=animal_type, **properties):
             storage.save(zoo.animals_list)
             print(f"\nThe {animal_type} info:")
-            zoo.search_by_name(name=properties['name'])
+            print_info(zoo.search_by_name(name=properties['name']).to_json())
             
     except Exception as e:
         animal_logger.error(f"validation error :{e}")
@@ -104,33 +98,37 @@ def operations(role):
         operation = print_menu('operations')
         match operation:
             case 1:
-                try:
-                    if permission(role=role):
-                        animal_type = input("\nEnter animal type (lion , rat , snake):")
-                        add_animal(animal_type=animal_type , role=role)
-                except p.PermissionError as e:
-                        animal_logger.error(f"a user try to create a new animal:{e}")
-                        print(e.args[0])
+                animal_type = input("\nEnter animal type (lion , rat , snake):")
+                add_animal(animal_type=animal_type , role=role)
             case 2:
-                try:
-                    if permission(role=role):
-                        animal_name = input("\nEnter animal name:")
-                        zoo.destroy(name=animal_name)
-                        animal_logger.info(f'{animal_name} is deleted from list')
-                except p.PermissionError as e:
-                        animal_logger.error(f"a user try to delete an animal:{e}")
-                        print(e.args[0])
+                    animal_name = input("\nEnter animal name:")
+                    animal = zoo.search_by_name(animal_name)
+                    if isinstance(animal , Animal):
+                        input_qu = input("\nare you sure you want to destroy this animal ( y / n ) :")
+                        if input_qu == 'y':
+                            zoo.destroy(role=role , animal=animal)
+                            print('the animal is deleted')
+                            storage.save(zoo.animals_list)
+                        elif input_qu == 'n':
+                            print('ok')
+                        else :
+                            print('\ninvalid input!')
             case 3:
                 zoo.ShowList()
             case 4:
                 name = input('Enter the name of animal:')
                 animal = zoo.search_by_name(name=name)
-                print_info(animal.to_json())
-
+                if isinstance(animal , bool):
+                    print('\nthis animal is not exist!')
+                else:
+                    print_info(animal.to_json())
             case 5:
                 id = input('Enter the id of animal:')
                 animal = zoo.search_by_id(id=id)
-                print_info(animal.to_json())
+                if isinstance(animal , bool):
+                    print('\nthis animal is not exist!')
+                else:
+                    print_info(animal.to_json())
             case 6:
                 zoo.counter()
             case 7:
@@ -138,7 +136,7 @@ def operations(role):
                     print(file.read())            
             case 8:
                 try:
-                    if logged_in(role):
+                    if not custom_permission.logged_in(role=role):
                         login()
                 except p.PermissionError as e:
                         print(e.args[0])
@@ -167,14 +165,16 @@ def login():
             case _:
                 print('\nyour input is invalid!s')
 
-def permission(role):
-    if role == "admin":
-        return True
-    p.raise_permission_error(1)
+admin_username = "admin"
+admin_password = "admin123"
 
-def logged_in(role):
-    if role == "admin":
-        p.raise_permission_error(2)
-    return True
+zoo = Zoo()
+animal_logger = CustomLogger('animal.log')
+
+storage_type = input('Enter storage tyoe (csv , json ,sqlite): ')
+
+storage = AnimalStorage.create_with_strategy(storage=storage_type)
+
+zoo.animals_list=storage.load()
 
 operations('user')

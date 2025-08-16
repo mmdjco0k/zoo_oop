@@ -1,11 +1,16 @@
 from animals.lion import Lion
 from animals.snake import Snake
 from animals.rat import Rat
+from permission import custom_permission
+from CustomLogger import CustomLogger
+import permission as p
 import ExceptionHandeling as eh
 import sqlite3
 import json
 import pickle
-import animalDb
+
+animal_logger = CustomLogger('animal.log')
+
 
 class Zoo:
     def __init__(self ):
@@ -27,44 +32,36 @@ class Zoo:
         for i in self.animals_list:
             if i.name == name :
                 eh.raise_error(9)
-    def create(self , animal_type , name , weight , age , **kwargs):
+    def create(self , role , animal_type , name , weight , age , **kwargs):
+        print("role is :",role)
         try:
-            self.validation(name)
-            animal = self.create_animal(animal_type , name , weight , age , **kwargs)
-            self.animals_list.append(animal)
-            return True
-        except eh.InvalidInput as e:
-            print("\n",e.args[0])
-            return False            
-
-    def destroy(self , name):
-        for AnimalObject in self.animals_list :
-
-            if AnimalObject.name == name :
-                from cli import print_info
-
-                print_info(AnimalObject.to_json())
-                i = input("\nare you sure you want to destroy this animal ( y / n ) :")
-                if i == 'y':
-                    self.animals_list.remove(AnimalObject)
-                    del AnimalObject
-                    print('the animal succsesfully destroyed')
+            if custom_permission.has_permission(role=role):
+                try:
+                    self.validation(name)
+                    animal = self.create_animal(animal_type , name , weight , age , **kwargs)
+                    self.animals_list.append(animal)
                     return True
-                elif i == 'n':
-                    print('ok')
-                    return False                    
-                else:
-                    print('\ninvalid input!')
-                    return False
-        print("\ninvalid input!")
-        return False
-    
+                except eh.InvalidInput as e:
+                    print("\n",e.args[0])
+                    return False            
+        except p.PermissionError as e:
+            animal_logger.error(f"a user try to create a new animal:{e}")
+            print(e.args[0])
+
+    def destroy(self , role , animal):
+        try:
+            if custom_permission.has_permission(role=role):
+                self.animals_list.remove(animal)
+                del animal
+        except p.PermissionError as e:
+            animal_logger.error(f"a user try to create a new animal:{e}")
+            print(e.args[0])
+        
     def ShowList(self):
         if len(self.animals_list) != 0:
             for AnimalObject in self.animals_list:
                 print("\n")
                 from cli import print_info
-
                 print_info(AnimalObject.to_json())
         else :
             print("\nThere is no animal in the zoo")

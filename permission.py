@@ -9,3 +9,17 @@ def raise_permission_error(exeption_id):
                 raise PermissionError()
             case 2:
                 raise PermissionError(message="\nyou allready logged in!")
+
+
+class custom_permission:
+    @staticmethod
+    def has_permission(role):
+        if role == "admin":
+            return True
+        raise_permission_error(1)
+    
+    @staticmethod
+    def logged_in(role):
+        if role == "user":
+            return False
+        raise_permission_error(2)

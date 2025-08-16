@@ -6,7 +6,7 @@ class CustomLogger:
         self.logger = logging.getLogger('custom_logger')
         self.logger.setLevel(logging.DEBUG)
         
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s',)
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
         file_handler = logging.FileHandler(filename, encoding='utf-8')
         file_handler.setFormatter(formatter)
