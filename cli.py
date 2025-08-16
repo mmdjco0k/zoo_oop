@@ -7,6 +7,18 @@ from animalDb import AnimalStorage
 from animals.animal import Animal
 import json
 
+admin_username = "admin"
+admin_password = "admin123"
+
+zoo = Zoo()
+animal_logger = CustomLogger('animal.log')
+
+storage_type = input('Enter storage tyoe (csv , json ,sqlite): ')
+
+storage = AnimalStorage.create_with_strategy(storage=storage_type)
+
+zoo.animals_list=storage.load()
+
 
 
 
@@ -102,7 +114,7 @@ def operations(role):
                 add_animal(animal_type=animal_type , role=role)
             case 2:
                     animal_name = input("\nEnter animal name:")
-                    animal = zoo.search_by_name(animal_name)
+                    animal = zoo.search_by_name(role , animal_name)
                     if isinstance(animal , Animal):
                         input_qu = input("\nare you sure you want to destroy this animal ( y / n ) :")
                         if input_qu == 'y':
@@ -114,18 +126,18 @@ def operations(role):
                         else :
                             print('\ninvalid input!')
             case 3:
-                zoo.ShowList()
+                zoo.ShowList(role=role)
             case 4:
                 name = input('Enter the name of animal:')
-                animal = zoo.search_by_name(name=name)
-                if isinstance(animal , bool):
+                animal = zoo.search_by_name(role , name=name)
+                if not isinstance(animal , bool):
                     print('\nthis animal is not exist!')
                 else:
                     print_info(animal.to_json())
             case 5:
                 id = input('Enter the id of animal:')
-                animal = zoo.search_by_id(id=id)
-                if isinstance(animal , bool):
+                animal = zoo.search_by_id(role , id=id)
+                if not isinstance(animal , bool):
                     print('\nthis animal is not exist!')
                 else:
                     print_info(animal.to_json())
@@ -164,17 +176,5 @@ def login():
                 break
             case _:
                 print('\nyour input is invalid!s')
-
-admin_username = "admin"
-admin_password = "admin123"
-
-zoo = Zoo()
-animal_logger = CustomLogger('animal.log')
-
-storage_type = input('Enter storage tyoe (csv , json ,sqlite): ')
-
-storage = AnimalStorage.create_with_strategy(storage=storage_type)
-
-zoo.animals_list=storage.load()
 
 operations('user')

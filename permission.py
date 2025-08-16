@@ -11,13 +11,20 @@ def raise_permission_error(exeption_id):
                 raise PermissionError(message="\nyou allready logged in!")
 
 
+
 class custom_permission:
-    @staticmethod
-    def has_permission(role):
-        if role == "admin":
-            return True
-        raise_permission_error(1)
+    def __init__(self):
+        self.permissions = {
+            'admin': ['create', 'destroy', 'show_list', 'search_by_id', 'search_by_name'],
+            'user': ['show_list', 'search_by_id', 'search_by_name'],}
     
+    def has_permission(self , role , method_name):
+        if method_name not in self.permissions[role]:
+            print(self.permissions[role])
+            print(method_name)
+            raise_permission_error(1)
+        return True
+
     @staticmethod
     def logged_in(role):
         if role == "user":
