@@ -24,18 +24,23 @@ class Zoo:
             animal_logger.error(f"a user tried to {method_name} and could not:{e}")
             print(e.args[0])
 
-
-    @staticmethod
-    def create_animal(animal_type , name , weight , age , **kwargs):
-        match animal_type:
-            case "lion":
-                return Lion(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
-            case "rat":
-                return Rat(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
-            case "snake":
-                return Snake(animal_type=animal_type , name=name , weight=weight , age=age , **kwargs)
-            case _:
-                eh.raise_error(7)
+    def create_animal(self, animal_type, name, weight, age, **kwargs):
+        animal_classes = {
+            "lion": Lion,
+            "snake": Snake,
+            "rat": Rat
+        }
+        
+        if animal_type not in animal_classes:
+            eh.raise_error(7)
+            
+        return animal_classes[animal_type](
+            animal_type=animal_type,
+            name=name,
+            weight=weight,
+            age=age,
+            **kwargs
+        )
 
     def validation(self , name):
         for i in self.animals_list:

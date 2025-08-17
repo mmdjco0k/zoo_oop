@@ -89,7 +89,7 @@ def add_animal(animal_type, role):
         if zoo.create(role=role ,animal_type=animal_type, **properties):
             storage.save(zoo.animals_list)
             print(f"\nThe {animal_type} info:")
-            print_info(zoo.search_by_name(name=properties['name']).to_json())
+            print_info(zoo.search_by_name(role , name=properties['name']).to_json())
             
     except Exception as e:
         animal_logger.error(f"validation error :{e}")
