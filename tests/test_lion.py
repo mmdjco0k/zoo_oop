@@ -1,5 +1,5 @@
 import unittest
-import animal
+from animals.lion import Lion
 import ExceptionHandeling as eh
 class LionTest(unittest.TestCase):
 
@@ -13,7 +13,7 @@ class LionTest(unittest.TestCase):
         self.strength = 2
 
     def test_lion_init(self):
-        animal_lion = animal.lion(animal_type=self.animal_type ,name=self.name , weight=self.weight ,
+        animal_lion = Lion(animal_type=self.animal_type ,name=self.name , weight=self.weight ,
                              age=self.age , tail_size=self.tail_size , herd_leader=self.herd_leader , strength=self.strength)
 
         self.assertEqual(animal_lion.name, self.name)
@@ -26,7 +26,7 @@ class LionTest(unittest.TestCase):
 
     def test_validation_weight_error(self):
         self.assertRaises(
-            eh.InvalidInput, animal.lion  , 
+            eh.InvalidInput,Lion , 
             animal_type=self.animal_type,
             name=self.name,
             weight=-1.1,
@@ -36,7 +36,7 @@ class LionTest(unittest.TestCase):
             strength=self.strength
         )
         self.assertRaises(
-            eh.InvalidInput, animal.lion  , 
+            eh.InvalidInput, Lion  , 
             animal_type=self.animal_type,
             name=self.name,
             weight=1,
@@ -47,7 +47,7 @@ class LionTest(unittest.TestCase):
         )
     def test_validation_age_error(self):
         self.assertRaises(
-            eh.InvalidInput, animal.lion  , 
+            eh.InvalidInput, Lion , 
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -57,7 +57,7 @@ class LionTest(unittest.TestCase):
             strength=self.strength
         )
         self.assertRaises(
-            eh.InvalidInput, animal.lion  , 
+            eh.InvalidInput, Lion , 
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -68,7 +68,7 @@ class LionTest(unittest.TestCase):
         )
     def test_validation_strength_error(self):
         self.assertRaises(
-            eh.InvalidInput, animal.lion  , 
+            eh.InvalidInput, Lion , 
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -78,7 +78,7 @@ class LionTest(unittest.TestCase):
             strength="s"
         )
         self.assertRaises(
-            eh.InvalidInput, animal.lion  , 
+            eh.InvalidInput, Lion , 
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -88,7 +88,7 @@ class LionTest(unittest.TestCase):
             strength=11
         )
         self.assertRaises(
-            eh.InvalidInput, animal.lion  , 
+            eh.InvalidInput, Lion , 
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -99,7 +99,7 @@ class LionTest(unittest.TestCase):
         )
     def test_validation_HerdLeader_error(self):
         self.assertRaises(
-            eh.InvalidInput, animal.lion  , 
+            eh.InvalidInput, Lion , 
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -110,7 +110,7 @@ class LionTest(unittest.TestCase):
         )  
     def test_validation_TailSize_error(self):
         self.assertRaises(
-            eh.InvalidInput, animal.lion  , 
+            eh.InvalidInput, Lion  , 
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -120,7 +120,7 @@ class LionTest(unittest.TestCase):
             strength=self.strength
         )
         self.assertRaises(
-            eh.InvalidInput, animal.lion  , 
+            eh.InvalidInput, Lion  , 
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -130,7 +130,7 @@ class LionTest(unittest.TestCase):
             strength=self.strength
         )
     def test_make_sound(self):
-        lion = animal.lion(animal_type=self.animal_type , name=self.name , age=self.age , weight=self.weight , tail_size=self.tail_size , strength=self.strength , herd_leader=self.herd_leader)
+        lion = Lion(animal_type=self.animal_type , name=self.name , age=self.age , weight=self.weight , tail_size=self.tail_size , strength=self.strength , herd_leader=self.herd_leader)
         sound = lion.make_sound()
         self.assertEqual(sound , "Roar")
         

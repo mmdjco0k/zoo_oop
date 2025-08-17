@@ -1,6 +1,6 @@
 import unittest
-import animal
 import ExceptionHandeling as eh
+from animals.rat import Rat
 
 class RatTest(unittest.TestCase):
 
@@ -14,7 +14,7 @@ class RatTest(unittest.TestCase):
         self.digging_ability = False
 
     def test_lion_init(self):
-        animal_rat = animal.rat(animal_type=self.animal_type ,name=self.name , weight=self.weight ,
+        animal_rat = Rat(animal_type=self.animal_type ,name=self.name , weight=self.weight ,
                              age=self.age , color=self.color , 
                              climbing_ability=self.climbing_ability , digging_ability=self.digging_ability)
 
@@ -27,7 +27,7 @@ class RatTest(unittest.TestCase):
         self.assertIsNotNone(animal_rat.id)
     
     def test_validation_climbing_ability(self):
-        self.assertRaises(eh.InvalidInput , animal.rat ,
+        self.assertRaises(eh.InvalidInput , Rat ,
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -38,7 +38,7 @@ class RatTest(unittest.TestCase):
         )
 
     def test_validation_digging_ability(self):
-        self.assertRaises(eh.InvalidInput , animal.rat ,
+        self.assertRaises(eh.InvalidInput , Rat ,
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -49,7 +49,7 @@ class RatTest(unittest.TestCase):
         )
     
     def test_make_sound(self):
-        animal_rat = animal.rat(animal_type=self.animal_type ,name=self.name , weight=self.weight ,
+        animal_rat = Rat(animal_type=self.animal_type ,name=self.name , weight=self.weight ,
                              age=self.age , color=self.color , 
                              climbing_ability=self.climbing_ability , digging_ability=self.digging_ability)
         sound = animal_rat.make_sound()

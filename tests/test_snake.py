@@ -1,6 +1,6 @@
 import unittest
-import animal
 import ExceptionHandeling as eh
+from animals.snake import Snake
 
 class SnakeTest(unittest.TestCase):
     def setUp(self):
@@ -13,7 +13,7 @@ class SnakeTest(unittest.TestCase):
         self.length = 2.2
     
     def test_snake_init(self):
-        snake = animal.snake(animal_type=self.animal_type , name=self.name , age=self.age , weight=self.weight ,
+        snake = Snake(animal_type=self.animal_type , name=self.name , age=self.age , weight=self.weight ,
                 venomous=self.venomous , tamed=self.tamed , length=self.length
         )
 
@@ -27,7 +27,7 @@ class SnakeTest(unittest.TestCase):
 
     def test_validation_venomous_error(self):
 
-        self.assertRaises(eh.InvalidInput , animal.snake ,
+        self.assertRaises(eh.InvalidInput , Snake ,
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -39,7 +39,7 @@ class SnakeTest(unittest.TestCase):
 
     def test_validation_tamed_error(self):
 
-        self.assertRaises(eh.InvalidInput , animal.snake ,
+        self.assertRaises(eh.InvalidInput , Snake ,
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -50,7 +50,7 @@ class SnakeTest(unittest.TestCase):
         )
     
     def test_validation_length_error(self):
-        self.assertRaises(eh.InvalidInput , animal.snake ,
+        self.assertRaises(eh.InvalidInput , Snake ,
             animal_type=self.animal_type,
             name=self.name,
             weight=self.weight,
@@ -61,7 +61,7 @@ class SnakeTest(unittest.TestCase):
         )
     
     def test_make_sound(self):
-        snake = animal.snake(animal_type=self.animal_type , name=self.name , age=self.age , weight=self.weight ,
+        snake = Snake(animal_type=self.animal_type , name=self.name , age=self.age , weight=self.weight ,
                 venomous=self.venomous , tamed=self.tamed , length=self.length)
         sound = snake.make_sound()
         self.assertEqual(sound , "sisss")

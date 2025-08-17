@@ -1,5 +1,6 @@
 from .animal import Animal
 from CustomLogger import CustomLogger
+import ExceptionHandeling as eh
 
 animal_logger = CustomLogger('animal.log')
 
