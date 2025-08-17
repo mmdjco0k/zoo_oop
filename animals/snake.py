@@ -61,35 +61,3 @@ class Snake(Animal):
 
     def make_sound(self):
         return "sisss"
-
-
-    def to_json(self):
-        base = super().to_json()
-        snake_properties = {"venomous":self._venomous , "tamed":self._tamed , "length":self._length}
-
-        base.update(snake_properties)
-        return base
-    
-    @classmethod
-    def from_json(cls, data):
-        return cls(
-            animal_type=data['animal_type'],
-            name=data['name'],
-            weight=data['weight'],
-            age=data['age'],
-            venomous=data['venomous'],
-            tamed=data['tamed'],
-            length=data['length']
-        )
-    
-    @classmethod
-    def from_csv(cls , data):
-        return cls(
-            animal_type=data['animal_type'],
-            name=data['name'],
-            weight=float(data['weight']),
-            age=int(data['age']),
-            venomous=bool(data['venomous']),
-            tamed=bool(data['tamed']),
-            length=float(data['length'])
-        )

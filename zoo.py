@@ -8,7 +8,7 @@ import ExceptionHandeling as eh
 import sqlite3
 import json
 import pickle
-
+from animals.serializers import AnimalSerializer 
 animal_logger = CustomLogger('animal.log')
 
 
@@ -71,7 +71,7 @@ class Zoo:
                 for AnimalObject in self.animals_list:
                     print("\n")
                     from cli import print_info
-                    print_info(AnimalObject.to_json())
+                    print_info(AnimalSerializer().to_json(AnimalObject))
             else :
                 print("\nThere is no animal in the zoo")
 
@@ -81,7 +81,7 @@ class Zoo:
                 if AnimalObject.id == int(id):
                     return AnimalObject
             print('\ninvalid input!')
-            return False
+            return None
 
     def search_by_name(self , role ,name):
         if self.check_permission(role, 'search_by_name'):
@@ -89,7 +89,7 @@ class Zoo:
                 if AnimalObject.name == name :
                     return AnimalObject
             print('\ninvalid input!')
-            return False
+            return None
  
     def counter(self):
         lion_counter = 0
@@ -105,3 +105,22 @@ class Zoo:
         print(f"We have {lion_counter} of lions")
         print(f"We have {rat_counter} of rats")
         print(f"We have {snake_counter} of snakes")
+
+
+# zoo = Zoo()
+# zoo.create(
+#         animal_type="lion",
+#         role="admin",
+#         name="l",
+#         age=2,
+#         weight=2.0,
+#         tail_size=2.2,
+#         herd_leader=True,
+#         strength=2
+#     )
+# lion = zoo.search_by_name(name="l" , role="admin")
+# serializer = LionSerializer()
+# json_data = serializer.to_json(lion)
+# print(json_data)
+
+# print(serializer.from_csv(json_data))

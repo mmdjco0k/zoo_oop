@@ -55,33 +55,3 @@ class Rat(Animal):
     def make_sound(self):
         return "hisses"
 
-
-    def to_json(self):
-        base = super().to_json()
-        rat_properties = {"color":self._color , "climbing":self._climbing_ability , "digging":self._digging_ability}    
-        base.update(rat_properties)
-        return base
-
-    @classmethod
-    def from_json(cls, data):
-        return cls(
-            animal_type=data['animal_type'],
-            name=data['name'],
-            weight=data['weight'],
-            age=data['age'],
-            color=data['color'],
-            climbing_ability=data['climbing'],
-            digging_ability=data['digging']
-        )
-
-    @classmethod
-    def from_csv(cls , data):
-        return cls(
-            animal_type=data['animal_type'],
-            name=data['name'],
-            weight=float(data['weight']),
-            age=int(data['age']),
-            color=data['color'],
-            climbing_ability=bool(data['climbing']),
-            digging_ability=bool(data['digging'])
-        )

@@ -72,33 +72,3 @@ class Lion(Animal):
     def make_sound(self):
         return "Roar"
     
-
-    def to_json(self):
-        base = super().to_json()
-        lion_properties = {"tail_size":self._tail_size , "herd_leader":self._herd_leader , "strength":self._strength}
-        base.update(lion_properties)
-        return base
-    
-    @classmethod
-    def from_json(cls , data):
-        return cls(
-            animal_type=data['animal_type'],
-            name=data['name'],
-            weight=data['weight'],
-            age=data['age'],
-            tail_size=data['tail_size'],
-            herd_leader=data['herd_leader'],
-            strength=data['strength']
-        )        
-
-    @classmethod
-    def from_csv(cls  , data):
-        return cls(
-            animal_type=data['animal_type'],
-            name=data['name'],
-            weight=float(data['weight']),
-            age=int(data['age']),
-            tail_size=float(data['tail_size']),
-            herd_leader=bool(data['herd_leader']),
-            strength=int(data['strength'])
-        )

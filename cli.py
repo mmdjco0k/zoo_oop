@@ -6,7 +6,9 @@ from CustomLogger import CustomLogger
 from animalDb import AnimalStorage
 from animals.animal import Animal
 from authorization import login
+from animals.serializers import AnimalSerializer
 import json
+
 
 zoo = Zoo()
 animal_logger = CustomLogger('animal.log')
@@ -17,6 +19,7 @@ storage = AnimalStorage.create_with_strategy(storage=storage_type)
 
 zoo.animals_list=storage.load()
 
+serilizer = AnimalSerializer()
 
 
 
@@ -89,7 +92,7 @@ def add_animal(animal_type, role):
         if zoo.create(role=role ,animal_type=animal_type, **properties):
             storage.save(zoo.animals_list)
             print(f"\nThe {animal_type} info:")
-            print_info(zoo.search_by_name(role , name=properties['name']).to_json())
+            print_info(serilizer.to_json(zoo.search_by_name(role , name=properties['name'])))
             
     except Exception as e:
         animal_logger.error(f"validation error :{e}")
@@ -120,17 +123,17 @@ def operations(role):
             case 4:
                 name = input('Enter the name of animal:')
                 animal = zoo.search_by_name(role , name=name)
-                if not isinstance(animal , bool):
+                if animal == None:
                     print('\nthis animal is not exist!')
                 else:
-                    print_info(animal.to_json())
+                    print_info(serilizer.to_json(animal))
             case 5:
                 id = input('Enter the id of animal:')
                 animal = zoo.search_by_id(role , id=id)
-                if not isinstance(animal , bool):
+                if animal == None:
                     print('\nthis animal is not exist!')
                 else:
-                    print_info(animal.to_json())
+                    print_info(serilizer.to_json(animal))
             case 6:
                 zoo.counter()
             case 7:

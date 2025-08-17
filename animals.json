@@ -1,1 +1,1 @@
-[{"animal_type": "snake", "name": "ss", "id": 3, "age": 2, "weight": 2.0, "venomous": true, "tamed": true, "length": 2.0}]
+[{"animal_type": "snake", "name": "ss", "id": 0, "age": 2, "weight": 2.0, "venomous": true, "tamed": true, "length": 2.0}, {"animal_type": "rat", "name": "ttt", "id": 1, "age": 3, "weight": 3.0, "color": "3", "climbing": true, "digging": true}]

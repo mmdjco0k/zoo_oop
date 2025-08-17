@@ -78,53 +78,9 @@ class Animal(ABC):
     def sleep(self):
         return f"The {self.name} is sleeping"
     
-    
-    def to_json(self):
-        dictionary = {"animal_type":self.animal_type ,"name":self.name , "id":self._id  , "age":self._age , "weight":self._weight}
-        return dictionary
-
 
     def make_sound(self):
         pass
-
-    @classmethod
-    def from_json(cls , data):
-        animal_type = data.get('animal_type')
-        match animal_type:
-            case "lion":
-                from .lion import Lion  
-
-                return Lion.from_json(data)
-            case "rat":
-                from .rat import Rat
-
-
-                return Rat.from_json(data)
-            case "snake":
-                from .snake import Snake
-
-                return Snake.from_json(data)
-            case _:
-                eh.raise_error(7)
-    
-    @classmethod
-    def from_csv(clas , data):
-        animal_type = data.get("animal_type")
-        match animal_type:
-            case "lion":
-                from .lion import Lion  
-
-                return Lion.from_csv(data)
-            case "rat":
-                from .rat import Rat
-                return Rat.from_csv(data)
-            case "snake":
-                from .snake import Snake
-                return Snake.from_csv(data)
-            case _:
-                eh.raise_error(7)
-
-
 
 
 
