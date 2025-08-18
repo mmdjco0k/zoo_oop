@@ -73,3 +73,11 @@ class Lion(Animal):
     def make_sound(self):
         return "Roar"
     
+    def __str__(self):
+        leader_status = "herd leader" if self._herd_leader else "not herd leader"
+        return super().__str__() + f"\nTail Size: {self.tail_size}, Role: {leader_status}, Strength: {self.strength}"
+
+    def __repr__(self):
+        return (f"{self.__class__.__name__}(name='{self.name}', "
+                f"weight={self.weight}, age={self.age}, "
+                f"tail_size={self.tail_size}, herd_leader={self._herd_leader}, strength={self.strength})")

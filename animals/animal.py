@@ -82,5 +82,8 @@ class Animal(ABC):
     def make_sound(self):
         pass
 
+    def __str__(self):
+        return f"{self.name} ({self._animal_type}) - Age: {self.age}, Weight: {self.weight}"
 
-
+    def __repr__(self):
+        return f"{self.__class__.__name__}(name='{self.name}', weight={self.weight}, age={self.age})"

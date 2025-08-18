@@ -55,4 +55,18 @@ class Rat(Animal):
     
     def make_sound(self):
         return "hisses"
+    
 
+
+
+    def __str__(self):
+        digging_status = "can dig"  if self._digging_ability else "can not dig"
+        climbing_status = "can climb" if self._climbing_ability else "can not climb"
+        return super().__str__() + f"\nColor: {self.color}, Digging : {digging_status} , Climbing : {climbing_status} "
+
+
+    def __repr__(self):
+        return (f"{self.__class__.__name__}(name='{self.name}', "
+                f"weight={self.weight}, age={self.age}, "
+                f"color='{self._color}', climbing_ability={self._climbing_ability}, "
+                f"digging_ability={self._digging_ability})")

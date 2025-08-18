@@ -106,21 +106,3 @@ class Zoo:
         print(f"We have {rat_counter} of rats")
         print(f"We have {snake_counter} of snakes")
 
-
-# zoo = Zoo()
-# zoo.create(
-#         animal_type="lion",
-#         role="admin",
-#         name="l",
-#         age=2,
-#         weight=2.0,
-#         tail_size=2.2,
-#         herd_leader=True,
-#         strength=2
-#     )
-# lion = zoo.search_by_name(name="l" , role="admin")
-# serializer = LionSerializer()
-# json_data = serializer.to_json(lion)
-# print(json_data)
-
-# print(serializer.from_csv(json_data))

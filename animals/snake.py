@@ -62,3 +62,13 @@ class Snake(Animal):
 
     def make_sound(self):
         return "sisss"
+
+    def __str__(self):
+        venom_status = "venomous" if self._venomous else "not venomous"
+        tame_status = "tamed" if self._tamed else "wild"
+        return super().__str__() + f"\nLength: {self.length}, Status: {venom_status}, {tame_status}"
+
+    def __repr__(self):
+        return (f"{self.__class__.__name__}(name='{self.name}', "
+                f"weight={self.weight}, age={self.age}, "
+                f"venomous={self._venomous}, tamed={self._tamed}, length={self.length})")
